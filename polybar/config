@@ -1,379 +1,329 @@
 [colors]
-background = #222D31
-background-alt = #444444
-foreground = #dddddd
+background = ${xrdb:background}
+background-alt = #444
+foreground = ${xrdb:foreground}
 foreground-alt = #555
-transparent = #0000000
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
+black       = ${xrdb:Polybar.color0}
+red         = ${xrdb:Polybar.color1}
+green       = ${xrdb:Polybar.color2}
+yellow      = ${xrdb:Polybar.color3}
+blue        = ${xrdb:Polybar.color4}
+magenta     = ${xrdb:Polybar.color5}
+cyan        = ${xrdb:Polybar.color6}
+white       = ${xrdb:Polybar.color7}
 
-[distance]
-#will center-shrink the bar
-border = 0
+
+;; ========================== MAIN BAR ===========================
 
 [bar/main]
-;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 25
-
-#round corners
-radius = 0.0
+height = 20px
 fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
-line-color = #f00
-
-
-border-bottom-size = 0
-border-left-size = ${distance.border}
-border-right-size = ${distance.border}
-border-color = ${colors.transparent}
-
-module-margin-left = 0
-module-margin-right = 2
-
-font-0 = "Cousine:style:size=10;3"
-font-1 = "Material Icons:size=11;4"
-
-modules-left = ewmh i3 
-modules-center = mpd
-modules-right = battery date powermenu
-
-# nasty tray hacks to get the tray to line with round cornors
+padding-left = 1
 padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Fira Code Nerd Font:pixelsize=10;1
+font-1 = Material Design Icons:pixelsize=16:style:Regular;2
+font-2 = Siji:pixelsize=10;1
+
+modules-left = i3
+modules-center = mpd
+modules-right = volume date
+
+#wm-restack = i3
+#override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+;; System Tray
 tray-position = right
 tray-transparent = false
 tray-background = ${colors.background}
 tray-detached = false
-tray-offset-x = 0
+
+
+;; ========================== WORKSPACES BAR =====================
+
+[bar/workspaces]
+width = 30%
+height = 30px
+offset-x = 10px 
+offset-y = 5px
+radius = 12
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Fira Code Nerd Font:pixelsize=10;1
+font-1 = Material Design Icons:pixelsize=16:style:Regular;2
+font-2 = Material Design Icons:pixelsize=50:style:Regular;3
+font-3 = BreezeSans:pixelsize=16:style=Bold;-10
+
+modules-left = i3
+modules-right = terminal browser
+#modules-center = i3
 
 wm-restack = i3
-override-redirect = false
+override-redirect = true
 
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+cursor-click = pointer
+cursor-scroll = default
 
-bottom = true
+;; =================== MUSIC BAR ========================
 
-[module/ewmh]
-type = internal/xworkspaces
+[bar/music]
+width = 25%
+height = 30px
+offset-x = 37.25%
+offset-y = 5px
+radius = 12
+fixed-center = true
 
-; Only show workspaces defined on the same output as the bar
-;
-; Useful if you want to show monitor specific workspaces
-; on different bars
-;
-; Default: false
-pin-workspaces = false
+background = ${colors.background}
+foreground = ${colors.foreground}
 
-; Create click handler used to focus desktop
-; Default: true
-enable-click = true
+padding-left = 2
+padding-right = 0
 
-; Create scroll handlers used to cycle desktops
-; Default: true
-enable-scroll = true
+module-margin-left = 0
+module-margin-right = 0
 
-; Available tags:
-;   <label-monitor>
-;   <label-state> - gets replaced with <label-(active|urgent|occupied|empty)>
-; Default: <label-state>
-format = <label-state>
+font-0 = Fira Code Nerd Font:pixelsize=10;1
+font-1 = Material Design Icons:pixelsize=16:style:Regular;2
+font-2 = Material Design Icons:pixelsize=50:style:Regular;3
+font-3 = BreezeSans:pixelsize=16:style=Bold;-10
 
-; Available tokens:
-;   %name%
-; Default: %name%
-label-monitor = %name%
+modules-center = mpd
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-active = %icon% %name%
-label-active-foreground = #ffffff
-label-active-background = #3f3f3f
-label-active-underline = #fba922
+wm-restack = i3
+override-redirect = true
 
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-occupied = %icon% %name%
-label-occupied-underline = #555555
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-urgent = %icon% %name%
-label-urgent-foreground = #000000
-label-urgent-background = #bd2c40
-label-urgent-underline = #9b0a20
-
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-; Default: %icon%  %name%
-label-empty = %icon% %name%
-label-empty-foreground = #55
-
-[module/title]
-type = internal/xwindow
-label = %title% 
-label-maxlen = 80
+cursor-click = pointer
+cursor-scroll = default
 
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
+;; =================== BAR STATUS =========================
 
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
+[bar/status]
+width = 25%
+height = 30px
+offset-x = 75%:-10
+offset-y = 5px
+radius = 12
+fixed-center = true
 
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
+background = ${colors.background}
+foreground = ${colors.foreground}
 
-label-layout = %layout%
-label-layout-underline = ${colors.secondary}
+padding-left = 2
+padding-right = 2
 
-label-indicator-padding = 1
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
+module-margin-left = 0
+module-margin-right = 0
 
+font-0 = BreezeSans:pixelsize=16:style=Bold;-10
+font-1 = Fira Code Nerd Font:pixelsize=10;1
+font-2 = Material Design Icons:pixelsize=16:style:Regular;2
+font-3 = Fira Code Nerd Font:pixelsize=8;10
+font-4 = Fira Code Nerd Font:pixelsize=8;-8
+
+modules-right = volume date
+
+wm-restack = i3
+override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+;; System Tray
+tray-position = right
+tray-transparent = false
+tray-background = ${colors.background}
+tray-detached = false
+
+;; ==================== BAR INFO ============================
+
+[bar/info]
+width = 10%
+height = 30px
+offset-x = 72%:-5
+offset-y = 5px
+radius = 12
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = BreezeSans:pixelsize=16:style=Bold;-10
+font-1 = Fira Code Nerd Font:pixelsize=10;1
+font-2 = Material Icons:pixelsize=16:style:Regular;2
+font-3 = Fira Code Nerd Font:pixelsize=8;10
+font-4 = Fira Code Nerd Font:pixelsize=8;-8
+
+modules-center = cpu temperature memory
+modules-left = close
+
+wm-restack = i3
+override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+
+;; =================== I3 MODULE ============================
 
 [module/i3]
 type = internal/i3
-
-; Only show workspaces defined on the same output as the bar
-;
-; Useful if you want to show monitor specific workspaces
-; on different bars
-;
-; Default: false
-pin-workspaces = true
-
-; This will split the workspace name on ':'
-; Default: false
-strip-wsnumbers = true
-
-; Sort the workspaces by index instead of the default
-; sorting that groups the workspaces by output
-; Default: false
-index-sort = true
-
-; Create click handler used to focus workspace
-; Default: true
-enable-click = false
-
-; Create scroll handlers used to cycle workspaces
-; Default: true
-enable-scroll = false
-
-; Wrap around when reaching the first/last workspace
-; Default: true
+format = <label-state> <label-mode>
 wrapping-scroll = false
 
-; Set the scroll cycle direction 
-; Default: true
-reverse-scroll = false
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
 
-; Use fuzzy (partial) matching on labels when assigning 
-; icons to workspaces
-; Example: code;♚ will apply the icon to all workspaces 
-; containing 'code' in the label
-; Default: false
-fuzzy-match = true
+label-mode-padding = 0
+label-mode-foreground = ${colors.foreground}
+label-mode-background = ${colors.background}
+
+; focused = Active workspace on focused monitor
+label-focused = ""
+label-focused-padding = 1
+label-focused-font = 3
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = ""
+label-unfocused-padding = 1
+label-unfocused-font = 3
+
+; urgent = Workspace with urgency hint set
+label-urgent = ""
+label-urgent-foreground = ${colors.red}
+label-urgent-font = 3
+label-urgent-padding = 1
+
+
+;; ======================== MPD =========================
 
 [module/mpd]
 type = internal/mpd
-format-online = <label-song> <icon-prev> <toggle> <icon-next>
+format-online = " <label-song> <icon-prev>  <toggle>  <icon-next> "
+label-song-maxlen = 70
+label-song-ellipsis = true
 
-icon-prev  = 
-icon-seekb = 
-icon-stop  = 
-icon-pause = 
-icon-play  = 
-icon-next  = 
-icon-seekf = 
+icon-music = M
+icon-prev  = 
+icon-pause = 
+icon-play  = 
+icon-next  = 
 
-icon-random = 
-icon-repeat = 
+icon-prev-foreground = ${colors.blue}
+icon-pause-foreground = ${colors.blue}
+icon-play-foreground = ${colors.blue}
+icon-next-foreground = ${colors.blue}
 
-label-song-maxlen = 60
-label-song-ellipsis = flase
+;; ======================= DATE ===============================
+
+[module/date]
+type = custom/script
+
+exec =  ~/.config/polybar/scripts/date.sh
+interval = 1
+tail = true
+
+;; ====================== POWERMENU ===========================
+
+[module/power-menu]
+type = custom/script
+
+exec = echo "  󰐥  "
+format-foreground = ${colors.red}
+click-left = ~/.config/polybar/scripts/powermenu.sh &
+
+
+;; ======================= VOLUME ===============================
+
+[module/volume]
+type = internal/pulseaudio
+
+format = <label>
+
+label-volume = "󰎇%{T2}%percentage%%%{T-} "
+
+label-muted = "󰎊 "
+label-muted-foreground = #607290
+
+
+;; ======================== CPU ================================
 
 [module/cpu]
 type = internal/cpu
-interval = 2
-format-prefix =
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
-label = %percentage%%
 
-[module/memory]
-type = internal/memory
-interval = 2
-format-prefix =
-format-suffix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
-label = %gb_free%
-#label = %percentage_used%%
-
-[module/wlan]
-type = internal/network
-interface = 
-interval = 3.0
-
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
-
-[module/eth]
-type = internal/network
-interface = 
-interval = 3.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
-
-[module/date]
-type = internal/date
 interval = 1
+format = <label>
 
-date = "%d.%m.%Y"
-date-alt = " %Y-%m-%d"
-
-time = %H:%M
-time-alt = %H:%M:%S
-
-format-prefix =
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
-
-label = %date% %time%
+format-prefix = "  " 
+label = "%{T2}%percentage%%%{T2} "
 
 
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = ADP0
-full-at = 98
-
-format-charging = <animation-charging><label-charging>
-format-charging-underline = #ffb52a
-time-format        = %H:%M
-
-format-discharging = <ramp-capacity><label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
-label-discharging  = %percentage%%
-#label-discharging  = %percentage%  (%time%)
-
-format-full-prefix =  
-format-padding     = 1
-format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 =
-
-animation-charging-0 =
-animation-charging-1 =
-animation-charging-2 =
-animation-charging-3 =
-animation-charging-4 =
-animation-charging-framerate = 2000
+;; ======================== TEMPERATURE ========================
 
 [module/temperature]
 type = internal/temperature
-thermal-zone = 0
-warn-temperature = 70
 
-format = <ramp> <label>
-format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
+format = <label>
+format-prefix = "  "
 
-label = %temperature%
-label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
+hwmon-path = /sys/devices/pci0000:00/0000:00:08.1/0000:07:00.0/hwmon/hwmon2/temp1_input
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
+label = "%{T2}%temperature-c%%{T-}  "
 
-[module/powermenu]
-type = custom/menu
 
-format-spacing = 1
+;; ========================= MEMORY ===============================
 
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
+[module/memory]
+type = internal/memory
 
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
+interval = 2
+format-prefix = "ﴵ  "
+label = "%{T2}%percentage_used%%%{T-}   " 
 
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
 
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
+;; ========================= OPEN =================================
 
-[settings]
-screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
+[module/open]
+type = custom/script
 
-[global/wm]
-margin-top = 0
-margin-bottom = 0
+exec = echo "%{F#79e6f3}  %{F-}"
 
-; vim:ft=dosini
+click-left = ~/.config/polybar/scripts/open.sh &
+
+;; ========================= CLOSE =================================
+
+[module/close]
+type = custom/script
+
+exec = echo "%{F#f37f97} %{F-}"
+
+click-left = ~/.config/polybar/scripts/close.sh
+
+# vim:ft=dosini

@@ -1,0 +1,67 @@
+window:
+  padding:
+    x: 10
+    y: 10
+
+scrolling:
+  history: 20000
+
+font:
+  normal:
+    family: Fira Code
+    style: Regular
+
+  bold:
+    family: Fira Code 
+    style: Bold
+
+  italic:
+    family: Fira Code
+    style: Italic
+
+  bold_italic:
+    family: Fira Code
+    style: Bold Italic
+
+  size: 11
+
+colors:
+  primary:
+    background: '#1d1f28'
+    foreground: '#fdfdfd'
+
+  normal:
+    black:   '#1d1f28'
+    red:     '#ab4642'
+    green:   '#7E807E'
+    yellow:  '#f7ca88'
+    blue:    '#7cafc2'
+    magenta: '#ba8baf' 
+    cyan:    '#1ABB9B'
+    white:   '#d8d8d8'
+
+  bright:
+    black:   '#585858'
+    red:     '#ab4642'
+    green:   '#8D8F8D'
+    yellow:  '#f7ca88'
+    blue:    '#7cafc2'
+    magenta: '#ba8baf'
+    cyan:    '#1ABB9B'
+    white:   '#f8f8f8'
+
+draw_bold_text_with_bright_colors: true
+background_opacity: 0.85
+
+url:
+  launcher: xdg-open
+
+cursor:
+  style: Underline
+
+key_bindings:
+  - { key: Return,   mods: Control|Shift,    action: SpawnNewInstance    }
+  - { key: V,        mods: Control|Shift,    action: Paste               }
+  - { key: C,        mods: Control|Shift,    action: Copy                }
+  - { key: Paste,                            action: Paste               }
+  - { key: Copy,                             action: Copy                }
