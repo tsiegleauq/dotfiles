@@ -1,0 +1,57 @@
+# Common aliases 
+alias cp='cp -i'
+alias df='df -h'
+alias free='free -m'
+alias clip="xclip -selection c"
+alias ls='exa'
+alias ll='exa --long --group --all --header'
+alias vim='nvim'
+alias vi='nvim'
+
+# some home infrastructure
+alias sshfspi='sshfs pi:/ ~/sshfs'
+alias usbip-bindbt="sudo usbip attach -r pi -d 1-1.5"
+alias lanplay='sudo /opt/store/tools/lan-play-linux --relay-server-addr memehouse.de:11451 --netif enp3s0'
+alias ebook-convert-all='for book in *.epub; do echo "Converting $book"; ebook-convert "$book" "$(basename "$book" .epub).mobi"; done'
+
+# work related
+alias sshthoe='ssh -X thoe'
+alias sshfsthoe='sshfs thoe:/ ~/sshfs'
+alias getan='python ~/getan/getan.py -d "$TIMEDBPATH"'
+alias getan-report='python ~/getan/getan-report -c -d "$TIMEDBPATH"'
+alias zeiterfassung='python ~/getan/getan-report -u se -t zeiterfassung -d "$TIMEDBPATH"'
+alias openslides='cd /opt/store/Arbeit/OpenSlides'
+
+#custom launchers for easier debug
+alias rpcs3='~/appimage/rpcs3.AppImage'
+
+#Set the wacom tablet to screen 1
+alias wacomscreen='xsetwacom set 8 MapToOutput HDMI-A-1'
+
+function mp3() {
+    youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube-music/%(title)s.%(ext)s' "$1"
+}
+
+# Downloads a playlist, i.e from music.youtube.com
+function mp3p() {
+    youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube-music/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+}
+
+function compress() {
+    7z a -t7z -m0=lzma2 -mx=9 -mfb=256 -md=32m -ms=on "$1.7z" "$1" 
+}
+
+function compress_video() {
+    ffmpeg -i "$1" -vcodec libx265 -acodec mp3 -crf 28 "$1-x265.mp4"
+}
+
+function record_screen_0() {
+    screencast -s 1920x1080 -p 1920,0 -o "~/Videos/recording" -a aac -v x264 -u
+}
+
+export CHROME_BIN=chromium
+export VISUAL=nvim
+export EDITOR=nvim
+export PATH=~/.npm-global/bin:$PATH
+export PUBLISHPATH="~/MEGA/jnr_alpha_latest"
+export TIMEDBPATH="/home/sean/MEGA/IntevationWochenberichte/getanDB/time.db"

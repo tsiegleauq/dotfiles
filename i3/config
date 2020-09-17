@@ -171,7 +171,7 @@ exec --no-startup-id pidgin
 exec --no-startup-id megasync
 
 # Default layout
-exec --no-startup-id "i3-msg 'workspace $ws10; append_layout ~/.i3/workspace-10.json'"
+#exec --no-startup-id "i3-msg 'workspace $ws10; append_layout ~/.i3/workspace-10.json'"
 
 
 #############################
