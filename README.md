@@ -5,7 +5,7 @@ Certain selected configuration files. Usually compatible with Manjaro-Linux
 
 ### Packages
 
-neovim picom  
+ttf-fira-code neovim picom  
 
 ### AUR 
 

@@ -35,7 +35,7 @@ font-2 = Siji:pixelsize=10;1
 
 modules-left = i3
 modules-center = mpd
-modules-right = volume date
+modules-right = battery volume date
 
 #wm-restack = i3
 #override-redirect = true
@@ -271,6 +271,42 @@ label-volume = "󰎇%{T2}%percentage%%%{T-} "
 
 label-muted = "󰎊 "
 label-muted-foreground = #607290
+
+
+;; ======================= BATTERY ==============================
+
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP0
+full-at = 98
+
+format-charging = <animation-charging><label-charging>
+format-charging-underline = #ffb52a
+time-format        = %H:%M
+
+format-discharging = <ramp-capacity><label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+label-discharging  = %percentage%%
+
+format-full-prefix =  
+format-padding     = 1
+format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 =
+
+animation-charging-0 =
+animation-charging-1 =
+animation-charging-2 =
+animation-charging-3 =
+animation-charging-4 =
+animation-charging-framerate = 2000
 
 
 ;; ======================== CPU ================================
