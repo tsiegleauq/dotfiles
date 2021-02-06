@@ -207,9 +207,13 @@ bindsym $mod+l exec ~/.config/i3/fuzzy_lock
 
 set $screenshotpath ~/Pictures/screenshots/screen_$(date -Iseconds).png
 
+# whole screen: print 
 bindsym Print exec --no-startup-id "maim $screenshotpath; notify-send 'Saved Screenshot'"
+# active window: mod print
 bindsym $mod+Print --release exec --no-startup-id "maim -i $(xdotool getactivewindow) $screenshotpath; notify-send 'Saved Screenshot of active window'"
+# save screen of selection as file: mod shift print
 bindsym $mod+Shift+Print --release exec --no-startup-id "maim -s $screenshotpath; notify-send 'Saved screenshot of selection'"
+# save screen of selection to clipboard: mod shift y
 bindsym $mod+Shift+y --release exec --no-startup-id "maim -s --hidecursor --format png /dev/stdout | xclip -selection clipboard -t image/png; notify-send 'Add screenshot to clipboard'"
 
 

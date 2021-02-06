@@ -35,7 +35,7 @@ font-2 = Siji:pixelsize=10;1
 
 modules-left = i3
 modules-center = mpd
-modules-right = battery volume date
+modules-right = battery memory volume date
 
 #wm-restack = i3
 #override-redirect = true
@@ -339,9 +339,9 @@ label = "%{T2}%temperature-c%%{T-}  "
 [module/memory]
 type = internal/memory
 
-interval = 2
-format-prefix = "ﴵ  "
-label = "%{T2}%percentage_used%%%{T-}   " 
+interval = 3
+format-prefix = " "
+label = "%{T2}%gb_used% / %gb_total%%{T-}" 
 
 
 ;; ========================= OPEN =================================
