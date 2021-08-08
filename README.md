@@ -5,8 +5,8 @@ Certain selected configuration files. Usually compatible with Manjaro-Linux
 
 ### Packages
 
-ttf-fira-code neovim picom  
+ttf-fira-code neovim
 
 ### AUR 
 
-nerd-fonts-fira-code ttf-material-design-icons
+nerd-fonts-fira-code ttf-material-design-icons picom-ibhagwan-git

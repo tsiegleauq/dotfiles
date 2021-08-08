@@ -62,7 +62,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -98,6 +97,17 @@ bindsym $mod+Ctrl+Right move workspace to output right
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+
+#############################
+### Special window rules  ###
+#############################
+
+for_window [window_role="About"] floating enable
+for_window [class="vlc"] floating enable
+for_window [title="Authy"] floating enable
+for_window [window_role="pop-up"] floating enable
+# set Godot_Engine runs floating
+for_window [instance="Godot_Engine"] floating enable
 
 
 #############################
@@ -137,6 +147,7 @@ mode "$mode_system" {
 }
 
 bindsym $mod+ssharp mode "$mode_system"
+bindsym $mod+colon mode "$mode_system"
 
 
 #############################
@@ -144,7 +155,7 @@ bindsym $mod+ssharp mode "$mode_system"
 #############################
 
 #Nitrogen & picom
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 1; picom --experimental-backends -b
 
 #Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
@@ -165,7 +176,7 @@ exec --no-startup-id clipit
 exec --no-startup-id blueman-applet
 
 # pidgin
-exec --no-startup-id pidgin
+#exec --no-startup-id pidgin
 
 # Mega
 exec --no-startup-id megasync
@@ -195,7 +206,7 @@ bindsym $mod+d exec --no-startup-id ~/.config/rofi/launcher/launcher.sh
 
 # start or stop picom
 bindsym $mod+t      exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+t exec --no-startup-id picom -b
+bindsym $mod+Ctrl+t exec --no-startup-id picom --experimental-backends -b
 
 # lock
 bindsym $mod+l exec ~/.config/i3/fuzzy_lock
@@ -276,7 +287,7 @@ gaps outer 0
 #border_radius 5
 #gaps top 20
 
-smart_gaps on
+#smart_gaps on
 
 # change inner gaps
 bindsym $mod+plus   gaps inner all plus 5
