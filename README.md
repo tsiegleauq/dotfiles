@@ -3,10 +3,12 @@ Certain selected configuration files. Usually compatible with Manjaro-Linux
 
 ## Dependencies
 
-### Packages
+i3-gaps dunst rofi maim alacritty ttf-fira-code
 
-ttf-fira-code neovim
+### AUR
 
-### AUR 
+nerd-fonts-fira-code ttf-material-design-icons picom-ibhagwan-git flashfocus-git
 
-nerd-fonts-fira-code ttf-material-design-icons picom-ibhagwan-git
+## Preview
+
+![preview screenshot](screenshots/preview.jpg)

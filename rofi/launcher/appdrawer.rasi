@@ -35,7 +35,7 @@ window {
   location: west;
   anchor: west;
   x-offset: 0px;
-  y-offset: 0px;
+  y-offset: 20px;
 }
 
 prompt {

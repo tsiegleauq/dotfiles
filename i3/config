@@ -49,6 +49,9 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+# find active window (requires flashfocus)
+bindsym $mod+n exec --no-startup-id flash_window
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -163,6 +166,9 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 #Dunst
 exec_always --no-startup-id dunst
 
+#flashfocus (https://github.com/fennerm/flashfocus)
+exec_always --no-startup-id flashfocus
+
 #apply screen layout
 exec --no-startup-id ~/.screenlayout/default.sh
 
@@ -220,12 +226,14 @@ set $screenshotpath ~/Pictures/screenshots/screen_$(date -Iseconds).png
 
 # whole screen: print 
 bindsym Print exec --no-startup-id "maim $screenshotpath; notify-send 'Saved Screenshot'"
+# whole screen in 5 seconds with no cursor
+bindsym $mod+Ctrl+Print exec --no-startup-id "maim $screenshotpath -u -d 5; notify-send 'Saved Screenshot'"
 # active window: mod print
 bindsym $mod+Print --release exec --no-startup-id "maim -i $(xdotool getactivewindow) $screenshotpath; notify-send 'Saved Screenshot of active window'"
 # save screen of selection as file: mod shift print
-bindsym $mod+Shift+Print --release exec --no-startup-id "maim -s $screenshotpath; notify-send 'Saved screenshot of selection'"
+bindsym $mod+Shift+Print --release exec --no-startup-id "maim -s -u $screenshotpath; notify-send 'Saved screenshot of selection'"
 # save screen of selection to clipboard: mod shift y
-bindsym $mod+Shift+y --release exec --no-startup-id "maim -s --hidecursor --format png /dev/stdout | xclip -selection clipboard -t image/png; notify-send 'Add screenshot to clipboard'"
+bindsym $mod+Shift+y --release exec --no-startup-id "maim -s -u --format png /dev/stdout | xclip -selection clipboard -t image/png; notify-send 'Add screenshot to clipboard'"
 
 
 #############################
