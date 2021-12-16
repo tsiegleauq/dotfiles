@@ -5,7 +5,6 @@ configuration {
     yoffset: 25;
     xoffset: 25;
     modi: "combi,drun";
-    theme: "solarized"; 
     font: "Fira Code Nerd Font 10";
 	combi-modi: "window,drun,ssh";
 }
