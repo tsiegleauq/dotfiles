@@ -12,7 +12,7 @@ font:
     style: Regular
 
   bold:
-    family: Fira Code 
+    family: Fira Code
     style: Bold
 
   italic:
@@ -36,7 +36,7 @@ colors:
     green:   '#7E807E'
     yellow:  '#f7ca88'
     blue:    '#7cafc2'
-    magenta: '#ba8baf' 
+    magenta: '#ba8baf'
     cyan:    '#1ABB9B'
     white:   '#d8d8d8'
 
