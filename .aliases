@@ -1,3 +1,4 @@
+
 # Common aliases 
 alias cp='cp -i'
 alias df='df -h'
@@ -7,51 +8,63 @@ alias ls='exa'
 alias ll='exa --long --group --all --header'
 alias vim='nvim'
 alias vi='nvim'
+alias testserver='python -m http.server 8000 --bind 0.0.0.0'
 
 # some home infrastructure
 alias sshfspi='sshfs pi:/ ~/sshfs'
 alias usbip-bindbt="sudo usbip attach -r pi -d 1-1.5"
-alias lanplay='sudo /opt/store/tools/lan-play-linux --relay-server-addr memehouse.de:11451 --netif enp3s0'
+alias lanplay='sudo /opt/store/tools/lan-play-linux --relay-server-addr switch.servegame.com:11451 --netif enp3s0'
 alias ebook-convert-all='for book in *.epub; do echo "Converting $book"; ebook-convert "$book" "$(basename "$book" .epub).mobi"; done'
-
-# work related
-alias sshthoe='ssh -X thoe'
-alias sshfsthoe='sshfs thoe:/ ~/sshfs'
-alias getan='python ~/getan/getan.py -d "$TIMEDBPATH"'
-alias getan-report='python ~/getan/getan-report -c -d "$TIMEDBPATH"'
-alias zeiterfassung='python ~/getan/getan-report -u se -t zeiterfassung -d "$TIMEDBPATH"'
-alias openslides='cd /opt/store/Arbeit/OpenSlides'
-
-#custom launchers for easier debug
-alias rpcs3='~/appimage/rpcs3.AppImage'
-
-#Set the wacom tablet to screen 1
-alias wacomscreen='xsetwacom set 8 MapToOutput HDMI-A-1'
-
-function mp3() {
-    youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube-music/%(title)s.%(ext)s' "$1"
-}
+alias sunshine="sunshine ~/.config/sunshine/sunshine.conf"
+alias rclone_mount="systemctl --user start rclone-crypt.service"
+alias rclone_umount="systemctl --user stop rclone-crypt.service"
 
 # Downloads a playlist, i.e from music.youtube.com
-function mp3p() {
-    youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Music/youtube-music/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+function download_music() {
+    yt-dlp  --ignore-errors --continue --no-overwrites --external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M' -x -f bestaudio[ext=m4a] --add-metadata --embed-thumbnail -o '~/Music/youtube-music/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
+}
+
+function download_video() {
+    #yt-dlp -f "bestvideo+bestaudio/best" "$1" -o "%(title)s" --exec "ffmpeg -y -i {} -vcodec libx265 -acodec aac -crf 28 {}-x265.mp4 || exit 1 && rm {}"
+    yt-dlp -f "bestvideo+bestaudio/best" "$1" -o "%(title)s"
 }
 
 function compress() {
-    7z a -t7z -m0=lzma2 -mx=9 -mfb=256 -md=32m -ms=on "$1.7z" "$1" 
+    for file in "$@";
+    do    
+        7z a -t7z -mx=9 -mfb=273 -ms -md=31 -myx=9 -mtm=- -mmt -mmtf -md=1536m -mmf=bt3 -mmc=10000 -mpb=0 -mlc=0 "$file.7z" "$file";
+        #7z a -t7z -m0=lzma2 -mx=9 -mfb=256 -md=32m -ms=on "$file.7z" "$file";
+    done
+    notify-send "Done" "All files compressed"
 }
 
 function compress_video() {
-    ffmpeg -i "$1" -vcodec libx265 -acodec mp3 -crf 28 "$1-x265.mp4"
+    for video in "$@";
+    do
+        ffmpeg -i "$video" -map 0:v:0 -map 0:a -map 0:s? -c:v libx265 -c:s copy -c:a copy -crf 28 "$video-x265.mkv" || exit 1;
+    done
+    notify-send "Done" "All videos compressed"
 }
 
-function record_screen_0() {
-    screencast -s 1920x1080 -p 1920,0 -o "~/Videos/recording" -a aac -v x264 -u
+function audio_to_ogg() {
+    for file in "$@";
+    do
+        ffmpeg -i "$file" "$file.ogg"
+    done
 }
 
 export CHROME_BIN=chromium
 export VISUAL=nvim
 export EDITOR=nvim
 export PATH=~/.npm-global/bin:$PATH
-export PUBLISHPATH="~/MEGA/jnr_alpha_latest"
+export PUBLISHPATH="~/MEGA/game_export"
 export TIMEDBPATH="/home/sean/MEGA/IntevationWochenberichte/getanDB/time.db"
+export FONTCONFIG_PATH=/etc/fonts
+
+## ssh stuff
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+
