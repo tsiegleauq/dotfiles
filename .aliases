@@ -8,6 +8,7 @@ alias ls='exa'
 alias ll='exa --long --group --all --header'
 alias vim='nvim'
 alias vi='nvim'
+alias hx='helix'
 alias testserver='python -m http.server 8000 --bind 0.0.0.0'
 
 # some home infrastructure
@@ -41,7 +42,7 @@ function compress() {
 function compress_video() {
     for video in "$@";
     do
-        ffmpeg -i "$video" -map 0:v:0 -map 0:a -map 0:s? -c:v libx265 -c:s copy -c:a copy -crf 28 "$video-x265.mkv" || exit 1;
+        ffmpeg -i "$video" -map 0:v:0 -map 0:a -map 0:s? -c:v libx265 -c:s copy -c:a aac -crf 28 "TMP_$video" || exit 1 && mv "TMP_$video" "$video";
     done
     notify-send "Done" "All videos compressed"
 }
