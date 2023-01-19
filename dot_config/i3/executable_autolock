@@ -1,0 +1,21 @@
+#!/bin/bash
+
+killall xidlehook
+
+off_screen_time=300
+suspend_time=600
+
+xidlehook \
+  --not-when-fullscreen \
+  --not-when-audio \
+  --timer $off_screen_time \
+    'xset dpms force off' \
+    '' \
+  --timer 5 \
+    '~/.config/i3/fuzzy_lock' \
+    '' \
+  --timer $suspend_time \
+    'systemctl suspend' \
+    '' \
+&
+

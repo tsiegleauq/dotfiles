@@ -1,0 +1,11 @@
+#!/bin/bash
+
+killall swayidle
+
+swayidle -w \
+    timeout 600 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    timeout 610 'swaylock -f' \
+    timeout 660 'systemctl suspend' \
+    before-sleep 'swaylock -f' \
+&

@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/etc/nginx'
+let g:netrw_dirhist_3='/usr/lib/libretro'
+let g:netrw_dirhist_2='/home/sean/.mpv'
+let g:netrw_dirhist_1='/opt/store/git-workspace/reflexcards/.git'

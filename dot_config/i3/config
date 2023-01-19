@@ -1,0 +1,330 @@
+# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+set $mod Mod4
+
+# individual applications
+set $myTerm alacritty
+set $myBrowser chromium
+set $myFilemanager nautilus 
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font xft:Fira Code Nerd Font 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+Left             focus left
+bindsym $mod+Down             focus down
+bindsym $mod+Up               focus up
+bindsym $mod+Right            focus right
+
+# move focused window
+bindsym $mod+Shift+Left       move left
+bindsym $mod+Shift+Down       move down
+bindsym $mod+Shift+Up         move up
+bindsym $mod+Shift+Right      move right
+
+# split orientation
+bindsym $mod+h split h;exec notify-send 'tile horizontally'
+bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+q split toggle
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+e layout stacking
+bindsym $mod+w layout tabbed
+
+# toggle tiling / floating
+bindsym $mod+s floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# find active window (requires flashfocus)
+bindsym $mod+n exec --no-startup-id flash_window
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9
+bindsym $mod+Ctrl+0 move container to workspace $ws10
+
+# move current workspace between monitors
+bindsym $mod+Ctrl+Left  move workspace to output left
+bindsym $mod+Ctrl+Down  move workspace to output down
+bindsym $mod+Ctrl+Up    move workspace to output up
+bindsym $mod+Ctrl+Right move workspace to output right
+
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+#############################
+### Special window rules  ###
+#############################
+
+for_window [window_role="About"] floating enable
+for_window [class="vlc"] floating enable
+for_window [title="Authy"] floating enable
+for_window [window_role="pop-up"] floating enable
+# set Godot_Engine runs floating
+for_window [instance="Godot_Engine"] floating enable
+for_window [instance="rpcs3"] floating enable
+
+
+#############################
+### resize menu           ###
+#############################
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+
+#############################
+### i3 exit menu          ###
+#############################
+
+set $mode_system (l)ock, (e)xit, (s)uspend, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id       ~/.config/i3/i3exit     lock,           mode "default"
+    bindsym s exec --no-startup-id       ~/.config/i3/i3exit     suspend,        mode "default"
+    bindsym e exec --no-startup-id       ~/.config/i3/i3exit     logout,         mode "default"
+    bindsym r exec --no-startup-id       ~/.config/i3/i3exit     reboot,         mode "default"
+    bindsym Shift+s exec --no-startup-id ~/.config/i3/i3exit     shutdown,       mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+ssharp mode "$mode_system"
+bindsym $mod+colon mode "$mode_system"
+
+
+#############################
+### Autostart             ###
+#############################
+
+#Nitrogen & picom
+exec --no-startup-id nitrogen --restore; sleep 1; picom --experimental-backends -b
+
+#Polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+#Dunst
+exec_always --no-startup-id dunst
+
+#flashfocus (https://github.com/fennerm/flashfocus)
+exec_always --no-startup-id flashfocus
+
+#apply screen layout
+exec --no-startup-id ~/.screenlayout/default.sh
+
+# network manager
+exec --no-startup-id nm-apple\t
+
+# clipit
+exec --no-startup-id clipit
+
+# bluetooth
+exec --no-startup-id blueman-applet
+
+# pidgin
+#exec --no-startup-id pidgin
+
+# Mega
+#exec --no-startup-id megasync
+
+# Default layout
+#exec --no-startup-id "i3-msg 'workspace $ws10; append_layout ~/.i3/workspace-10.json'"
+
+# xidlehook
+exec --no-startup-id ~/.config/i3/autolock
+
+
+#############################
+### App shortcuts         ###
+#############################
+
+# start a terminal
+bindsym $mod+Return exec --no-startup-id $myTerm
+
+# start your favorite browser
+bindsym $mod+F2 exec $myBrowser
+
+# start your favorite file manager
+bindsym $mod+F3 exec $myFilemanager
+
+# start your favorite ranger ;)
+bindsym $mod+F4 exec --no-startup-id $myTerm -e ranger
+
+# start rofi
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/launcher/launcher.sh
+
+# start or stop picom
+bindsym $mod+t      exec --no-startup-id pkill picom
+bindsym $mod+Ctrl+t exec --no-startup-id picom --experimental-backends -b
+
+# lock
+bindsym $mod+l exec ~/.config/i3/fuzzy_lock
+
+
+#############################
+### Screenshots           ###
+#############################
+
+set $screenshotpath ~/Pictures/screenshots/screen_$(date -Iseconds).png
+
+# whole screen: print 
+bindsym Print exec --no-startup-id "maim $screenshotpath; notify-send 'Saved Screenshot'"
+# whole screen in 5 seconds with no cursor
+bindsym $mod+Ctrl+Print exec --no-startup-id "maim $screenshotpath -u -d 5; notify-send 'Saved Screenshot'"
+# active window: mod print
+bindsym $mod+Print --release exec --no-startup-id "maim -i $(xdotool getactivewindow) $screenshotpath; notify-send 'Saved Screenshot of active window'"
+# save screen of selection as file: mod shift print
+bindsym $mod+Shift+Print --release exec --no-startup-id "maim -s -u $screenshotpath; notify-send 'Saved screenshot of selection'"
+# save screen of selection to clipboard: mod shift y
+bindsym $mod+Shift+y --release exec --no-startup-id "maim -s -u --format png /dev/stdout | xclip -selection clipboard -t image/png; notify-send 'Add screenshot to clipboard'"
+
+
+#############################
+### Sound                 ###
+#############################
+
+exec --no-startup-id pa-applet
+bindsym $mod+Ctrl+m exec pavucontrol
+
+set $volumepath ~/.config/i3
+
+# Command for the status line (used with -t, requires -u)
+#   ie: i3blocks, i3status
+set $statuscmd i3status
+
+# Signal used to update the status line (used with -u, requires -t)
+#   i3blocks uses SIGRTMIN+10 by default
+#   i3status uses SIGUSR1 by default
+set $statussig SIGUSR1
+
+# Amount to increase/decrease volume as a percentage (used with -i, -d)
+set $volumestep 5
+
+# pulseaudio-utils settings when not using alsa-utils
+#
+# Symbolic name for sink (numeric index not supported) (used with -s $sinkname)
+#   Recommended: comment out this setting and omit the -s option to use default sink
+#   List sink names: pacmd list-sinks | awk -F "[<>]" '/^\s+name: <.*>/{print $2}'
+
+# Using pulseaudio-utils (append "-s $sinkname" without quotes to override default sink)
+bindsym XF86AudioRaiseVolume exec $volumepath/volume -np -i $volumestep -t $statuscmd -u $statussig
+bindsym XF86AudioLowerVolume exec $volumepath/volume -np -d $volumestep -t $statuscmd -u $statussig
+bindsym XF86AudioMute        exec $volumepath/volume -mn -t $statuscmd -u $statussig
+
+bindsym Control+Mod1+Right   exec $volumepath/volume -np -i $volumestep -t $statuscmd -u $statussig
+bindsym Control+Mod1+Left    exec $volumepath/volume -np -d $volumestep -t $statuscmd -u $statussig
+bindsym Control+Mod1+M       exec $volumepath/volume -mn -t $statuscmd -u $statussig
+
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioStop exec mpc stop
+bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioNext exec mpc next
+
+
+#############################
+### Screen brightness     ###
+#############################
+
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+
+#############################
+### Settings for i3-gaps: ###
+#############################
+
+# Set inner/outer gaps
+gaps inner 10
+gaps outer 0
+#border_radius 5
+#gaps top 20
+
+#smart_gaps on
+
+# change inner gaps
+bindsym $mod+plus   gaps inner all plus 5
+
+# decrease inner gap size
+bindsym $mod+minus  gaps inner all minus 5
+
+# Theme colors
+# Colors from Xresources
+set $bg  #00000000
+set_from_resource $fg  color2  #f0f0f0
+set_from_resource $bg2 color4  #f0f0f0
+set_from_resource $fg2 color4  #f0f0f0
+set_from_resource $fg4 color5  #f0f0f0
+set_from_resource $bg3 color2  #f0f0f0
+set_from_resource $bg4 color6  #f0f0f0
+set_from_resource $fg3 color7  #f0f0f0
+
+#class                 border  backgr. text indicator child_border
+client.focused          $bg       $bg    $fg  $fg3   $bg
+client.focused_inactive $bg      $bg    $fg  $fg2   $bg
+client.unfocused        $bg      $bg    $fg  $fg2   $bg
+client.urgent           $bg      $bg    $fg  $fg4   $bg
+client.placeholder      $bg      $bg    $fg  $fg2   $bg
+client.background       $bg
+
+# Hide title
+for_window [class="^.*"] border pixel 0

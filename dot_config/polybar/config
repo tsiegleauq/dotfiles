@@ -1,0 +1,365 @@
+[colors]
+background = ${xrdb:background}
+background-alt = #444
+foreground = ${xrdb:foreground}
+foreground-alt = #555
+black       = ${xrdb:Polybar.color0}
+red         = ${xrdb:Polybar.color1}
+green       = ${xrdb:Polybar.color2}
+yellow      = ${xrdb:Polybar.color3}
+blue        = ${xrdb:Polybar.color4}
+magenta     = ${xrdb:Polybar.color5}
+cyan        = ${xrdb:Polybar.color6}
+white       = ${xrdb:Polybar.color7}
+
+
+;; ========================== MAIN BAR ===========================
+
+[bar/main]
+width = 100%
+height = 20px
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 1
+padding-right = 1
+
+module-margin-left = 1.5
+module-margin-right = 1.5
+
+font-0 = Fira Code Nerd Font:pixelsize=10;1
+font-1 = Material Design Icons:pixelsize=16:style:Regular;2
+font-2 = Siji:pixelsize=10;1
+
+modules-left = i3
+modules-center = mpd
+modules-right = battery volume date
+
+#wm-restack = i3
+#override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+;; System Tray
+tray-position = right
+tray-transparent = false
+tray-background = ${colors.background}
+tray-detached = false
+
+
+;; ========================== WORKSPACES BAR =====================
+
+[bar/workspaces]
+width = 30%
+height = 30px
+offset-x = 10px 
+offset-y = 5px
+radius = 12
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Fira Code Nerd Font:pixelsize=10;1
+font-1 = Material Design Icons:pixelsize=16:style:Regular;2
+font-2 = Material Design Icons:pixelsize=50:style:Regular;3
+font-3 = BreezeSans:pixelsize=16:style=Bold;-10
+
+modules-left = i3
+modules-right = terminal browser
+#modules-center = i3
+
+wm-restack = i3
+override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+;; =================== MUSIC BAR ========================
+
+[bar/music]
+width = 25%
+height = 30px
+offset-x = 37.25%
+offset-y = 5px
+radius = 12
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Fira Code Nerd Font:pixelsize=10;1
+font-1 = Material Design Icons:pixelsize=16:style:Regular;2
+font-2 = Material Design Icons:pixelsize=50:style:Regular;3
+font-3 = BreezeSans:pixelsize=16:style=Bold;-10
+
+modules-center = mpd
+
+wm-restack = i3
+override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+
+;; =================== BAR STATUS =========================
+
+[bar/status]
+width = 25%
+height = 30px
+offset-x = 75%:-10
+offset-y = 5px
+radius = 12
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = BreezeSans:pixelsize=16:style=Bold;-10
+font-1 = Fira Code Nerd Font:pixelsize=10;1
+font-2 = Material Design Icons:pixelsize=16:style:Regular;2
+font-3 = Fira Code Nerd Font:pixelsize=8;10
+font-4 = Fira Code Nerd Font:pixelsize=8;-8
+
+modules-right = volume date
+
+wm-restack = i3
+override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+;; System Tray
+tray-position = right
+tray-transparent = false
+tray-background = ${colors.background}
+tray-detached = false
+
+;; ==================== BAR INFO ============================
+
+[bar/info]
+width = 10%
+height = 30px
+offset-x = 72%:-5
+offset-y = 5px
+radius = 12
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+padding-left = 2
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = BreezeSans:pixelsize=16:style=Bold;-10
+font-1 = Fira Code Nerd Font:pixelsize=10;1
+font-2 = Material Icons:pixelsize=16:style:Regular;2
+font-3 = Fira Code Nerd Font:pixelsize=8;10
+font-4 = Fira Code Nerd Font:pixelsize=8;-8
+
+modules-center = cpu temperature memory
+modules-left = close
+
+wm-restack = i3
+override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+
+;; =================== I3 MODULE ============================
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode-padding = 0
+label-mode-foreground = ${colors.foreground}
+label-mode-background = ${colors.background}
+
+; focused = Active workspace on focused monitor
+label-focused = ""
+label-focused-padding = 1
+label-focused-font = 3
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = ""
+label-unfocused-padding = 1
+label-unfocused-font = 3
+
+; urgent = Workspace with urgency hint set
+label-urgent = ""
+label-urgent-foreground = ${colors.red}
+label-urgent-font = 3
+label-urgent-padding = 1
+
+
+;; ======================== MPD =========================
+
+[module/mpd]
+type = internal/mpd
+format-online = " <label-song> <icon-prev>  <toggle>  <icon-next> "
+label-song-maxlen = 70
+label-song-ellipsis = true
+
+icon-music = M
+icon-prev  = 
+icon-pause = 
+icon-play  = 
+icon-next  = 
+
+icon-prev-foreground = ${colors.blue}
+icon-pause-foreground = ${colors.blue}
+icon-play-foreground = ${colors.blue}
+icon-next-foreground = ${colors.blue}
+
+;; ======================= DATE ===============================
+
+[module/date]
+type = custom/script
+
+exec =  ~/.config/polybar/scripts/date.sh
+interval = 1
+tail = true
+
+;; ====================== POWERMENU ===========================
+
+[module/power-menu]
+type = custom/script
+
+exec = echo "  󰐥  "
+format-foreground = ${colors.red}
+click-left = ~/.config/polybar/scripts/powermenu.sh &
+
+
+;; ======================= VOLUME ===============================
+
+[module/volume]
+type = internal/pulseaudio
+
+format = <label>
+
+label-volume = "󰎇%{T2}%percentage%%%{T-} "
+
+label-muted = "󰎊 "
+label-muted-foreground = #607290
+
+
+;; ======================= BATTERY ==============================
+
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP0
+full-at = 98
+
+format-charging = <animation-charging><label-charging>
+format-charging-underline = #ffb52a
+time-format        = %H:%M
+
+format-discharging = <ramp-capacity><label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+label-discharging  = %percentage%%
+
+format-full-prefix =  
+format-padding     = 1
+format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 =
+
+animation-charging-0 =
+animation-charging-1 =
+animation-charging-2 =
+animation-charging-3 =
+animation-charging-4 =
+animation-charging-framerate = 2000
+
+
+;; ======================== CPU ================================
+
+[module/cpu]
+type = internal/cpu
+
+interval = 1
+format = <label>
+
+format-prefix = "  " 
+label = "%{T2}%percentage%%%{T2} "
+
+
+;; ======================== TEMPERATURE ========================
+
+[module/temperature]
+type = internal/temperature
+
+format = <label>
+format-prefix = "  "
+
+hwmon-path = /sys/devices/pci0000:00/0000:00:08.1/0000:07:00.0/hwmon/hwmon2/temp1_input
+
+label = "%{T2}%temperature-c%%{T-}  "
+
+
+;; ========================= MEMORY ===============================
+
+[module/memory]
+type = internal/memory
+
+interval = 3
+format-prefix = " "
+label = "%{T2}%gb_used% / %gb_total%%{T-}" 
+
+
+;; ========================= OPEN =================================
+
+[module/open]
+type = custom/script
+
+exec = echo "%{F#79e6f3}  %{F-}"
+
+click-left = ~/.config/polybar/scripts/open.sh &
+
+;; ========================= CLOSE =================================
+
+[module/close]
+type = custom/script
+
+exec = echo "%{F#f37f97} %{F-}"
+
+click-left = ~/.config/polybar/scripts/close.sh
+
+# vim:ft=dosini

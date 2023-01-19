@@ -1,0 +1,10 @@
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus";
+    location: 1;
+    yoffset: 25;
+    xoffset: 25;
+    modi: "combi,drun";
+    font: "Fira Code Nerd Font 10";
+	combi-modi: "window,drun,ssh";
+}
