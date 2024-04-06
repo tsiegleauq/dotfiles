@@ -25,11 +25,6 @@ function download_music() {
     yt-dlp  --ignore-errors --continue --no-overwrites --external-downloader aria2c --external-downloader-args '-c -j 3 -x 3 -s 3 -k 1M' -x -f bestaudio[ext=m4a] --add-metadata --embed-thumbnail -o '~/Music/youtube-music/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s' "$1"
 }
 
-function download_video() {
-    #yt-dlp -f "bestvideo+bestaudio/best" "$1" -o "%(title)s" --exec "ffmpeg -y -i {} -vcodec libx265 -acodec aac -crf 28 {}-x265.mp4 || exit 1 && rm {}"
-    yt-dlp -f "bestvideo+bestaudio/best" "$1" -o "%(title)s"
-}
-
 function compress() {
     for file in "$@";
     do    
@@ -39,10 +34,38 @@ function compress() {
     notify-send "Done" "All files compressed"
 }
 
-function compress_video() {
+function compress_x265() {
+    mkdir -p ./compress_x265
     for video in "$@";
     do
-        ffmpeg -i "$video" -map 0:v:0 -map 0:a -map 0:s? -c:v libx265 -c:s copy -c:a aac -crf 28 "TMP_$video.mkv" || exit 1 && mv "TMP_$video.mkv" "$video";
+        ffmpeg -i "$video" \
+            -map 0:v:0 \
+            -map 0:a? \
+            -map 0:s? \
+            -pix_fmt yuv420p10le \
+            -c:v libx265 \
+            -crf 28 \
+            -preset medium \
+            -c:s copy \
+            -c:a libopus \
+            "compress_x265/${video%.*}.mkv";
+    done
+    notify-send "Done" "All videos compressed"
+}
+
+function compress_share() {
+    for video in "$@";
+    do
+        ffmpeg -i "$video" \
+            -map 0:v:0 \
+            -map 0:a? \
+            -map 0:s? \
+            -c:v libx264 \
+            -pix_fmt yuv420p \
+            -crf 32 \
+            -c:s copy \
+            -c:a aac \
+            "SHARE_${video%.*}.mp4"
     done
     notify-send "Done" "All videos compressed"
 }
@@ -58,8 +81,6 @@ export CHROME_BIN=chromium
 export VISUAL=nvim
 export EDITOR=nvim
 export PATH=~/.npm-global/bin:$PATH
-export PUBLISHPATH="~/MEGA/game_export"
-export TIMEDBPATH="/home/sean/MEGA/IntevationWochenberichte/getanDB/time.db"
 export FONTCONFIG_PATH=/etc/fonts
 
 ## ssh stuff
@@ -67,5 +88,4 @@ export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export _JAVA_AWT_WM_NONREPARENTING=1
-
 
