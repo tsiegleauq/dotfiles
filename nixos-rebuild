@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")"
+exec sudo nixos-rebuild \
+	$@ \
+	--flake $(dirname "$0")#$(hostname)
+
