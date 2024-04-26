@@ -33,6 +33,7 @@
         pull = {
           rebase = true;
         };
+        init.defaultBranch = "master";
       };
     };
   };

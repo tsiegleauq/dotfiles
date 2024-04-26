@@ -5,15 +5,16 @@
 
   gnome.enable = true;
   samsungprinter.enable = true;
-  steam.enable = true;
+  #steam.enable = true;
   zshos.enable = true;
   nh.enable = true;
+  bluetooth.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos-main";
+  networking.hostName = "nixos-notebook";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -23,11 +24,10 @@
 
   # Configure keymap
   services.xserver.xkb = {
-    layout = "us";
-    variant = "altgr-intl";
+    layout = "de";
+    variant = "nodeadkeys";
   };
 
-  # SSD trimming
   services.fstrim.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).

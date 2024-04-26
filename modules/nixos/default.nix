@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./autologin.nix
+    ./bluetooth.nix
     ./fonts.nix
     ./gnome.nix
     ./locales.nix

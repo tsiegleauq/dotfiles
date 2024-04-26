@@ -22,7 +22,7 @@
   }: {
     nixosConfigurations = {
       ##############
-      # main machine
+      # Main machine
       ##############
       nixos-main = nixpkgs.lib.nixosSystem {
         specialArgs = {
@@ -38,6 +38,26 @@
               extraSpecialArgs = {inherit inputs;};
               users = {
                 sean = import ./hosts/nixos-main/home.nix;
+              };
+            };
+          }
+        ];
+      };
+      # Notebook
+      nixos-notebook = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/nixos-notebook/configuration.nix
+          ./modules/nixos
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              extraSpecialArgs = {inherit inputs;};
+              users = {
+                sean = import ./hosts/nixos-notebook/home.nix;
               };
             };
           }

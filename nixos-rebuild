@@ -5,3 +5,5 @@ exec sudo nixos-rebuild \
 	$@ \
 	--flake $(dirname "$0")#$(hostname)
 
+# i.e
+# sudo nixos-rebuild switch --flake /home/sean/.dotfiles#nixos-notebook
