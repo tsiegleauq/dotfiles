@@ -4,7 +4,7 @@
   ];
 
   gnome.enable = true;
-  samsungprinter.enable = true;
+  # samsungprinter.enable = true;
   #steam.enable = true;
   zshos.enable = true;
   nh.enable = true;
@@ -43,9 +43,6 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-
-  environment.variables.EDITOR = "vim";
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   system.stateVersion = "23.11";
 }

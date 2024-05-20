@@ -35,15 +35,6 @@
         };
         search.force = true;
 
-        bookmarks = [
-          {
-            name = "wikipedia";
-            tags = ["wiki"];
-            keyword = "wiki";
-            url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&go=Go";
-          }
-        ];
-
         settings = {
           "dom.security.https_only_mode" = true;
           "browser.download.panel.shown" = true;

@@ -22,6 +22,7 @@
       extraConfig = {
         core = {
           commentchar = ";";
+          editor = "nvim";
         };
         color = {
           ui = "auto";

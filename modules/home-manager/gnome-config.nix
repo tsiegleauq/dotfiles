@@ -5,6 +5,7 @@
   ...
 }: let
   theme_name = "Orchis";
+  # theme_name = "Orchis-Dark";
 in {
   options.gnomeconfig.enable = lib.mkEnableOption "enables gnome config home-manager module";
 
@@ -17,7 +18,8 @@ in {
       ++ (with pkgs.gnomeExtensions; [
         user-themes
         dash-to-panel
-        quick-settings-tweaker
+        # tray-icons-reloaded
+        # quick-settings-tweaker
         gsconnect
       ]);
 
@@ -60,6 +62,7 @@ in {
         enabled-extensions = [
           "dash-to-panel@jderose9.github.com"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
+          # "trayIconsReloaded@selfmade.pl"
           "quick-settings-tweaks@qwreey"
           "gsconnect@andyholmes.github.io"
         ];
@@ -71,10 +74,10 @@ in {
         name = "${theme_name}";
       };
 
-      "org/gnome/shell/extensions/quick-settings-tweaks" = {
-        add-dnd-quick-toggle-enabled = false;
-        output-show-selected = true;
-      };
+      # "org/gnome/shell/extensions/quick-settings-tweaks" = {
+      #   add-dnd-quick-toggle-enabled = false;
+      #   output-show-selected = true;
+      # };
 
       "org/gnome/shell/extensions/dash-to-panel" = {
         panel-sizes = "{\"0\":32}";

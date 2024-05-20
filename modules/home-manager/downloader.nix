@@ -10,7 +10,9 @@
     home.packages = with pkgs; [
       # uget
       # uget-integrator
-      motrix
+      # motrix
+      vdhcoapp
+      pyload-ng
     ];
 
     programs.yt-dlp = {

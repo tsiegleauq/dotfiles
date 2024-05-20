@@ -15,7 +15,8 @@
     stateVersion = "23.11";
     file = {};
     sessionVariables = {
-      EDITOR = "nvim";
+      # to run "protonup" command that installs protonGE
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
     };
   };
 
@@ -42,15 +43,23 @@
   # individual packages per machine
   home.packages = with pkgs; [
     audacity
+    # butler #broken package
     desktop-file-utils
     discord
     easyeffects
     gimp
     godot_4
+    #mnamer # broken
+    jellyfin-media-player
     libnotify
+    pavucontrol
     ruffle
+    rpi-imager
     krita
+    telegram-desktop
+    unrar
     veracrypt
     vesktop
+    vlc
   ];
 }

@@ -13,7 +13,7 @@
   nix-switch = "nh os switch";
   nix-test = "nh os test";
   nix-update = "sudo nix-channel --update";
-  flake-update = "nix flake update";
+  flake-update = "nix flake update ~/.dotfiles";
 
   # home stuff
   # some home infrastructure

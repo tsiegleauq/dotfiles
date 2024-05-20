@@ -15,22 +15,24 @@
         yzhang.markdown-all-in-one
         bbenoist.nix
         kamadorueda.alejandra
+        esbenp.prettier-vscode
+        vue.volar
       ];
 
-      userSettings = {
-        # Editor Font
-        "editor.fontFamily" = "'FiraCode Nerd Font', monospace";
-        "editor.fontSize" = 14;
-        "editor.fontLigatures" = true;
+      # userSettings = {
+      #   # Editor Font
+      #   "editor.fontFamily" = "'FiraCode Nerd Font', monospace";
+      #   "editor.fontSize" = 14;
+      #   "editor.fontLigatures" = true;
 
-        # Terminal Font
-        "terminal.integrated.fontFamily" = "'FiraCode Nerd Font Mono', monospace";
-        "terminal.integrated.fontSize" = 14;
+      #   # Terminal Font
+      #   "terminal.integrated.fontFamily" = "'FiraCode Nerd Font Mono', monospace";
+      #   "terminal.integrated.fontSize" = 14;
 
-        # Styling
-        "workbench.colorTheme" = "Dracula";
-        "window.menuBarVisibility" = "toggle";
-      };
+      #   # Styling
+      #   "workbench.colorTheme" = "Dracula";
+      #   "window.menuBarVisibility" = "toggle";
+      # };
     };
   };
 }

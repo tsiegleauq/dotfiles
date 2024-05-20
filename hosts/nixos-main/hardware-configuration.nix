@@ -17,11 +17,6 @@
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
-  # unlock optional LUKS devices (legacy drives)
-  environment.etc."crypttab".text = ''
-    cryptroot    /dev/disk/by-uuid/f8c3d579-fea9-4be5-a69b-4cb7352b8b23   /root/keyfile     luks
-  '';
-
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/b54eb7f9-fc23-4229-b7c6-483cb31fc556";
@@ -39,17 +34,23 @@
       fsType = "ext4";
     };
 
+    "/media/store2" = {
+      device = "/dev/disk/by-uuid/6e986274-2898-40eb-9b8c-b2acffbb9c31";
+      options = ["nofail"];
+      fsType = "ext4";
+    };
+
     "/media/games" = {
       device = "/dev/disk/by-uuid/eef1d983-1deb-45f4-9288-8353e37207b0";
       options = ["nofail"];
       fsType = "ext4";
     };
 
-    "/mnt/oldroot" = {
-      device = "/dev/disk/by-uuid/f8e426b3-e661-4ac5-b61b-90ec1c31e332";
-      options = ["ssd" "noatime" "nofail"];
-      fsType = "btrfs";
-    };
+    # "/mnt/nfshdd" = {
+    #   device = "omv:/hdd";
+    #   fsType = "nfs";
+    #   options = ["nfsvers=4.2" "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+    # };
   };
 
   swapDevices = [];
@@ -64,4 +65,5 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.xone.enable = true;
 }

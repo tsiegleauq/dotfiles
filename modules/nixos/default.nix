@@ -15,7 +15,7 @@
     ./sound.nix
     ./spice.nix
     ./steam.nix
-    ./system-packages.nix
+    ./system-environment.nix
     ./zsh.nix
   ];
 }

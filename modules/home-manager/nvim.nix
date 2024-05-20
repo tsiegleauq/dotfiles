@@ -7,6 +7,7 @@
 
   config = lib.mkIf config.nvim.enable {
     programs.neovim = {
+      defaultEditor = true;
       enable = true;
       extraConfig = ''
         set number relativenumber
