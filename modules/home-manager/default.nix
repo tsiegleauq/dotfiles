@@ -6,6 +6,7 @@
   imports = [
     ./alacritty.nix
     ./chromium.nix
+    ./direnv.nix
     ./downloader.nix
     ./firefox.nix
     ./git.nix

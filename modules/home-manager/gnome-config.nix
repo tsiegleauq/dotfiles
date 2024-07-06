@@ -18,9 +18,9 @@ in {
       ++ (with pkgs.gnomeExtensions; [
         user-themes
         dash-to-panel
-        # tray-icons-reloaded
-        # quick-settings-tweaker
+        quick-settings-tweaker
         gsconnect
+        appindicator
       ]);
 
     gtk = {
@@ -60,9 +60,9 @@ in {
 
         # `gnome-extensions list` for a list
         enabled-extensions = [
+          "appindicatorsupport@rgcjonas.gmail.com"
           "dash-to-panel@jderose9.github.com"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
-          # "trayIconsReloaded@selfmade.pl"
           "quick-settings-tweaks@qwreey"
           "gsconnect@andyholmes.github.io"
         ];

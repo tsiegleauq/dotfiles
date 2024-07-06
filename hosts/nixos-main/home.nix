@@ -27,6 +27,7 @@
   #enable software
   alacritty.enable = true;
   chromium.enable = true;
+  direnv.enable = true;
   downloader.enable = true;
   firefox.enable = true;
   git.enable = true;
@@ -53,6 +54,7 @@
     jellyfin-media-player
     libnotify
     pavucontrol
+    r2modman
     ruffle
     rpi-imager
     krita
@@ -61,5 +63,22 @@
     veracrypt
     vesktop
     vlc
+    tor-browser
+    wipe
   ];
+
+  programs.kodi = {
+    enable = true;
+    package = pkgs.kodi-wayland.passthru.withPackages (kodiPkgs:
+      with kodiPkgs; [
+        # trakt
+        youtube # or invidious?
+        netflix
+        # libretro
+        # inputstream-ffmpegdirect
+        # inputstream-adaptive
+        # pvr-iptvsimple
+        # jellycon
+      ]);
+  };
 }

@@ -13,6 +13,7 @@
         "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmark sync
         "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
         "lmjnegcaeklhafolokijcfjliaokphfk" # Video Download Helper
+        "oldceeleldhonbafppcapldpdifcinji" # LanguageTool
         # Wip
         # {
         # iamadamdev/bypass-paywalls-chrome

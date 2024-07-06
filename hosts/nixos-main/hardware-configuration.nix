@@ -34,12 +34,6 @@
       fsType = "ext4";
     };
 
-    "/media/store2" = {
-      device = "/dev/disk/by-uuid/6e986274-2898-40eb-9b8c-b2acffbb9c31";
-      options = ["nofail"];
-      fsType = "ext4";
-    };
-
     "/media/games" = {
       device = "/dev/disk/by-uuid/eef1d983-1deb-45f4-9288-8353e37207b0";
       options = ["nofail"];

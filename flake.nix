@@ -53,6 +53,7 @@
           ./hosts/nixos-notebook/configuration.nix
           ./modules/nixos
           home-manager.nixosModules.home-manager
+          inputs.stylix.nixosModules.stylix
           {
             home-manager = {
               extraSpecialArgs = {inherit inputs;};
