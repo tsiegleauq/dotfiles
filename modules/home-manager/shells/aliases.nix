@@ -14,6 +14,7 @@
   nix-test = "nh os test";
   nix-update = "sudo nix-channel --update";
   flake-update = "nix flake update ~/.dotfiles";
+  nix-cleanup = "nh clean all";
 
   # home stuff
   # some home infrastructure

@@ -24,13 +24,13 @@
   programs.home-manager.enable = true;
 
   #enable software
-  alacritty.enable = true;
+  # alacritty.enable = true;
   chromium.enable = true;
   #downloader.enable = true;
   #firefox.enable = true;
   git.enable = true;
   gnomeconfig.enable = true;
-  lf.enable = true;
+  # lf.enable = true;
   #libreoffice.enable = true;
   mpv.enable = true;
   nvim.enable = true;

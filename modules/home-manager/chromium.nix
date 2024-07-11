@@ -14,6 +14,7 @@
         "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
         "lmjnegcaeklhafolokijcfjliaokphfk" # Video Download Helper
         "oldceeleldhonbafppcapldpdifcinji" # LanguageTool
+        "nngceckbapebfimnlniiiahkandclblb" # bitwarden
         # Wip
         # {
         # iamadamdev/bypass-paywalls-chrome

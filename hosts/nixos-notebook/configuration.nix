@@ -4,7 +4,7 @@
   ];
 
   gnome.enable = true;
-  # samsungprinter.enable = true;
+  samsungprinter.enable = true;
   #steam.enable = true;
   zshos.enable = true;
   nh.enable = true;
