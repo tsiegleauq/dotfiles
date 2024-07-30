@@ -50,6 +50,7 @@
     easyeffects
     gimp
     godot_4
+    ghex
     #mnamer # broken
     jellyfin-media-player
     libnotify
@@ -65,20 +66,22 @@
     vlc
     tor-browser
     wipe
+    ppsspp-sdl-wayland
+    unzip
   ];
 
-  programs.kodi = {
-    enable = true;
-    package = pkgs.kodi-wayland.passthru.withPackages (kodiPkgs:
-      with kodiPkgs; [
-        # trakt
-        youtube # or invidious?
-        netflix
-        # libretro
-        # inputstream-ffmpegdirect
-        # inputstream-adaptive
-        # pvr-iptvsimple
-        # jellycon
-      ]);
-  };
+  # programs.kodi = {
+  #   enable = true;
+  #   package = pkgs.kodi-wayland.passthru.withPackages (kodiPkgs:
+  #     with kodiPkgs; [
+  #       # trakt
+  #       youtube # or invidious?
+  #       netflix
+  #       # libretro
+  #       # inputstream-ffmpegdirect
+  #       # inputstream-adaptive
+  #       # pvr-iptvsimple
+  #       # jellycon
+  #     ]);
+  # };
 }

@@ -12,7 +12,7 @@
       # uget-integrator
       # motrix
       vdhcoapp
-      pyload-ng
+      # pyload-ng
     ];
 
     programs.yt-dlp = {

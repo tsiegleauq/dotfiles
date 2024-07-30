@@ -15,9 +15,9 @@
     services.xserver.desktopManager.gnome.enable = true;
     programs.dconf.enable = true;
 
-    environment.systemPackages = with pkgs.gnome; [
+    environment.systemPackages = with pkgs; [
       gnome-tweaks
-      gnome-shell-extensions
+      gnome.gnome-shell-extensions
     ];
 
     # Remove some default gnome packages that I dont like
