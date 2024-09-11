@@ -20,5 +20,6 @@
     ./ssh-client.nix
     ./vscode.nix
     ./shells/zsh.nix
+    ./zed.nix
   ];
 }

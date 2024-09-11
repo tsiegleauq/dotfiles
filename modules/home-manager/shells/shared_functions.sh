@@ -11,7 +11,7 @@ compress_x265() {
             -crf 28 \
             -preset medium \
             -c:s copy \
-            -c:a libopus \
+            -c:a copy \
             "compress_x265/${video%.*}.mkv";
     done
     notify-send "Done" "All videos compressed"

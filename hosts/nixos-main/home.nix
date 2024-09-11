@@ -25,21 +25,22 @@
   programs.home-manager.enable = true;
 
   #enable software
-  alacritty.enable = true;
+  # alacritty.enable = true;
   chromium.enable = true;
   direnv.enable = true;
   downloader.enable = true;
-  firefox.enable = true;
+  # firefox.enable = true;
   git.enable = true;
   gnomeconfig.enable = true;
-  lf.enable = true;
-  libreoffice.enable = true;
+  # lf.enable = true;
+  # libreoffice.enable = true;
   mpv.enable = true;
   nvim.enable = true;
-  rclone.enable = true;
+  # rclone.enable = true;
   ssh-client.enable = true;
   vscode.enable = true;
   zsh.enable = true;
+  zed.enable = true;
 
   # individual packages per machine
   home.packages = with pkgs; [
@@ -50,24 +51,27 @@
     easyeffects
     gimp
     godot_4
-    ghex
-    #mnamer # broken
+    # ghex
+    # mnamer # broken
+    # iperf
     jellyfin-media-player
     libnotify
+    # lutris
+    # wineWowPackages.stable
     pavucontrol
     r2modman
     ruffle
-    rpi-imager
+    # rpi-imager
     krita
     telegram-desktop
     unrar
     veracrypt
     vesktop
     vlc
-    tor-browser
-    wipe
-    ppsspp-sdl-wayland
+    # tor-browser
+    # wipe
     unzip
+    p7zip
   ];
 
   # programs.kodi = {

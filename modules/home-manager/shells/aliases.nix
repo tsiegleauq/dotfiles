@@ -15,6 +15,7 @@
   nix-update = "sudo nix-channel --update";
   flake-update = "nix flake update ~/.dotfiles";
   nix-cleanup = "nh clean all";
+  trimssd = "sudo fstrim -av";
 
   # home stuff
   # some home infrastructure

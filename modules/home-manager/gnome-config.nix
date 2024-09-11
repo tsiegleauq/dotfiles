@@ -12,12 +12,13 @@ in {
   config = lib.mkIf config.gnomeconfig.enable {
     home.packages =
       (with pkgs; [
-        orchis-theme
+        (orchis-theme.override {tweaks = ["compact"];})
         tela-icon-theme
       ])
       ++ (with pkgs.gnomeExtensions; [
         user-themes
-        dash-to-panel
+        hide-top-bar
+        dash-to-dock
         quick-settings-tweaker
         gsconnect
         appindicator
@@ -61,7 +62,8 @@ in {
         # `gnome-extensions list` for a list
         enabled-extensions = [
           "appindicatorsupport@rgcjonas.gmail.com"
-          "dash-to-panel@jderose9.github.com"
+          "dash-to-dock@micxgx.gmail.com"
+          "hidetopbar@mathieu.bidon.ca"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
           "quick-settings-tweaks@qwreey"
           "gsconnect@andyholmes.github.io"
@@ -74,24 +76,14 @@ in {
         name = "${theme_name}";
       };
 
-      # "org/gnome/shell/extensions/quick-settings-tweaks" = {
-      #   add-dnd-quick-toggle-enabled = false;
-      #   output-show-selected = true;
-      # };
+      "org/gnome/shell/extensions/quick-settings-tweaks" = {
+        add-dnd-quick-toggle-enabled = false;
+        output-show-selected = true;
+      };
 
-      "org/gnome/shell/extensions/dash-to-panel" = {
-        panel-sizes = "{\"0\":32}";
-        dot-style-focused = "DASHES";
-        dot-style-unfocused = "DOTS";
-        animate-appicon-hover = true;
-        intellihide = true;
-        intellihide-hide-from-windows = true;
-        intellihide-use-pressure = true;
-        trans-use-custom-bg = true;
-        trans-bg-color = "#241f31";
-        trans-use-dynamic-opacity = true;
-        trans-dynamic-anim-target = 1.0;
-        panel-element-positions = "{\"0\":[{\"element\":\"showAppsButton\",\"visible\":false,\"position\":\"stackedTL\"},{\"element\":\"activitiesButton\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"leftBox\",\"visible\":true,\"position\":\"stackedTL\"},{\"element\":\"taskbar\",\"visible\":true,\"position\":\"centered\"},{\"element\":\"centerBox\",\"visible\":true,\"position\":\"centered\"},{\"element\":\"rightBox\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"dateMenu\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"systemMenu\",\"visible\":true,\"position\":\"stackedBR\"},{\"element\":\"desktopButton\",\"visible\":false,\"position\":\"stackedBR\"}]}";
+      "org/gnome/shell/extensions/hidetopbar" = {
+        mouse-sensitive = true;
+        hot-corner = true;
       };
     };
   };

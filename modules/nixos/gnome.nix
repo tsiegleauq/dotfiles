@@ -17,16 +17,13 @@
 
     environment.systemPackages = with pkgs; [
       gnome-tweaks
-      gnome.gnome-shell-extensions
+      gnome-shell-extensions
     ];
 
     # Remove some default gnome packages that I dont like
-    environment.gnome.excludePackages =
-      (with pkgs; [
-        gnome-tour
-      ])
-      ++ (with pkgs.gnome; [
-        gnome-maps
-      ]);
+    environment.gnome.excludePackages = with pkgs; [
+      gnome-tour
+      gnome-maps
+    ];
   };
 }

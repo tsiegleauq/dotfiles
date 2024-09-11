@@ -26,15 +26,15 @@
   #enable software
   # alacritty.enable = true;
   chromium.enable = true;
-  #downloader.enable = true;
-  #firefox.enable = true;
+  # downloader.enable = true;
+  # firefox.enable = true;
   git.enable = true;
   gnomeconfig.enable = true;
   # lf.enable = true;
-  #libreoffice.enable = true;
+  # libreoffice.enable = true;
   mpv.enable = true;
   nvim.enable = true;
-  #rclone.enable = true;
+  # rclone.enable = true;
   ssh-client.enable = true;
   vscode.enable = true;
   zsh.enable = true;

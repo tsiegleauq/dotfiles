@@ -12,30 +12,55 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
-  boot.extraModulePackages = [];
+  boot = {
+    initrd = {
+      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
+      kernelModules = [];
+      luks.devices = {
+        "luks-8c94a92d-5dfe-46ab-ae74-01afcc1d9f74" = {
+          device = "/dev/disk/by-uuid/8c94a92d-5dfe-46ab-ae74-01afcc1d9f74";
+          allowDiscards = true;
+        };
+      };
+    };
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
+  };
+
+  # unlock local LUKS devices
+  environment.etc.crypttab.text = ''
+    store1 UUID=6e2ea2c7-9867-4b3c-8e6a-41f1bbd09ef6 /root/mykeyfile.key
+    store_encrypted UUID=28d3d51b-79b3-4f7f-a05b-089d681cc7f2 /root/mykeyfile.key
+    games UUID=4bf1b50e-0064-4510-9c54-4336740fae23 /root/mykeyfile.key
+  '';
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/b54eb7f9-fc23-4229-b7c6-483cb31fc556";
+      device = "/dev/disk/by-uuid/9a326b65-ccd8-4ef7-a07e-00f8f795c95c";
       fsType = "ext4";
+      options = ["discard" "noatime"];
     };
 
     "/boot" = {
-      device = "/dev/disk/by-uuid/A9E1-71D1";
+      device = "/dev/disk/by-uuid/927C-B622";
       fsType = "vfat";
+      options = ["fmask=0022" "dmask=0022"];
     };
 
     "/media/store" = {
-      device = "/dev/disk/by-uuid/c23ef302-4d21-4a4a-b5e8-cb7af12ef0ec";
+      device = "/dev/mapper/store1";
+      options = ["nofail"];
+      fsType = "ext4";
+    };
+
+    "/media/games_encrypted" = {
+      device = "/dev/mapper/store_encrypted";
       options = ["nofail"];
       fsType = "ext4";
     };
 
     "/media/games" = {
-      device = "/dev/disk/by-uuid/eef1d983-1deb-45f4-9288-8353e37207b0";
+      device = "/dev/mapper/games";
       options = ["nofail"];
       fsType = "ext4";
     };
