@@ -13,6 +13,7 @@
       # motrix
       vdhcoapp
       # pyload-ng
+      jre #for jdownloader
     ];
 
     programs.yt-dlp = {

@@ -33,7 +33,7 @@
   git.enable = true;
   gnomeconfig.enable = true;
   # lf.enable = true;
-  # libreoffice.enable = true;
+  libreoffice.enable = true;
   mpv.enable = true;
   nvim.enable = true;
   # rclone.enable = true;
@@ -46,8 +46,10 @@
   home.packages = with pkgs; [
     audacity
     # butler #broken package
+    f3
+    bottles
     desktop-file-utils
-    discord
+    # discord
     easyeffects
     gimp
     godot_4
@@ -68,10 +70,11 @@
     veracrypt
     vesktop
     vlc
-    # tor-browser
+    tor-browser
     # wipe
     unzip
     p7zip
+    vrrtest
   ];
 
   # programs.kodi = {

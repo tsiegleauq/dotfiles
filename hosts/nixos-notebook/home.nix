@@ -43,10 +43,10 @@
   home.packages = with pkgs; [
     #audacity
     #desktop-file-utils
-    discord
+    # discord
     #easyeffects
     #gimp
-    godot_4
+    # godot_4
     libnotify
     #ruffle
     #krita

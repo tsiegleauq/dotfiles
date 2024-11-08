@@ -32,7 +32,7 @@
     hostName = "nixos-main";
     networkmanager.enable = true;
     extraHosts = ''
-      192.168.0.52 omv
+      192.168.0.26 omv
       192.168.0.128 moode
     '';
   };
