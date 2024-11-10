@@ -19,6 +19,7 @@
         bbenoist.nix
         kamadorueda.alejandra
         esbenp.prettier-vscode
+        eamodio.gitlens
         #vue.volar
       ];
 
