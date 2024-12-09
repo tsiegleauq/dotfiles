@@ -13,7 +13,7 @@
   nix-switch = "nh os switch";
   nix-test = "nh os test";
   nix-update = "sudo nix-channel --update";
-  flake-update = "nix flake update ~/.dotfiles";
+  flake-update = "nix flake update --flake ~/.dotfiles";
   nix-cleanup = "nh clean all";
   trimssd = "sudo fstrim -av";
 

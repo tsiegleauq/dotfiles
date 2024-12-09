@@ -44,7 +44,7 @@ in {
     dconf.settings = {
       "org/gnome/desktop/interface" = {
         icon-theme = "Tela";
-        monospace-font-name = "FiraCode Nerd Font Propo 10";
+        monospace-font-name = "Fira Code 10 @wght=400";
       };
 
       # keyboard shortcuts

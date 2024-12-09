@@ -79,6 +79,13 @@
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.xone.enable = true;
+
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    xone.enable = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+  };
 }

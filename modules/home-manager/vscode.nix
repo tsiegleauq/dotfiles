@@ -25,13 +25,13 @@
 
       userSettings = {
         # Editor Font
-        "editor.fontFamily" = "'FiraCode Nerd Font', monospace";
+        "editor.fontFamily" = "'Fira Code', monospace";
         "editor.fontSize" = 14;
         "editor.fontLigatures" = true;
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
 
         # Terminal Font
-        "terminal.integrated.fontFamily" = "'FiraCode Nerd Font Mono', monospace";
+        "terminal.integrated.fontFamily" = "'Fira Code', monospace";
         "terminal.integrated.fontSize" = 14;
 
         # Styling

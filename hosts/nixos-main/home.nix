@@ -48,6 +48,7 @@
     # butler #broken package
     f3
     bottles
+    calibre
     desktop-file-utils
     # discord
     easyeffects
@@ -65,6 +66,7 @@
     ruffle
     # rpi-imager
     krita
+    moonlight-qt
     telegram-desktop
     unrar
     veracrypt

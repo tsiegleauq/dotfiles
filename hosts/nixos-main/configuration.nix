@@ -12,6 +12,7 @@
   steam.enable = true;
   zshos.enable = true;
   nh.enable = true;
+  sunshine.enable = true;
   # bluetooth.enable = true;
 
   # Bootloader.
@@ -73,4 +74,12 @@
   #   # Add any missing dynamic libraries for unpackaged programs
   #   # here, NOT in environment.systemPackages
   # ];
+
+  ## Testig nix-flathub
+  services.flatpak = {
+    enable = true;
+    # packages = [
+    #   "com.usebottles.bottles" # install bottles from flathub
+    # ];
+  };
 }

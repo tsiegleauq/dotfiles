@@ -13,11 +13,17 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # nix-flatpak = {
+    #   url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = inputs @ {
     nixpkgs,
     home-manager,
+    # nix-flatpak,
     ...
   }: {
     nixosConfigurations = {
@@ -32,6 +38,7 @@
         modules = [
           ./hosts/nixos-main/configuration.nix
           ./modules/nixos
+          # nix-flatpak.nixosModules.nix-flatpak
           home-manager.nixosModules.home-manager
           {
             home-manager = {
