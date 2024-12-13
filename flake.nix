@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -21,8 +22,10 @@
   };
 
   outputs = inputs @ {
+    self,
     nixpkgs,
     home-manager,
+    nixos-wsl,
     # nix-flatpak,
     ...
   }: {
@@ -65,6 +68,27 @@
               extraSpecialArgs = {inherit inputs;};
               users = {
                 sean = import ./hosts/nixos-notebook/home.nix;
+              };
+            };
+          }
+        ];
+      };
+      #wsl
+      nixos-wsl = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/nixos-wsl/configuration.nix
+          nixos-wsl.nixosModules.default
+          ./modules/nixos
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              extraSpecialArgs = {inherit inputs;};
+              users = {
+                sean = import ./hosts/nixos-wsl/home.nix;
               };
             };
           }

@@ -8,3 +8,4 @@ exec sudo nixos-rebuild \
 # i.e
 # --upgrade
 # sudo nixos-rebuild switch --flake /home/sean/.dotfiles#nixos-notebook
+# sudo nixos-rebuild switch -I nixos-config=/home/sean/.dotfiles/hosts/nixos-wsl/configuration.nix

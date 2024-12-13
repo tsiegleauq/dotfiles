@@ -4,12 +4,16 @@
   ...
 }: {
   options.git.enable = lib.mkEnableOption "enables git home-manager module";
+  options.git.email = lib.mkOption {
+    default = "sean.f.t.engelhardt@gmail.com";
+    type = lib.types.str;
+  };
 
   config = lib.mkIf config.git.enable {
     programs.git = {
       enable = true;
       userName = "Sean Engelhardt";
-      userEmail = "sean.f.t.engelhardt@gmail.com";
+      userEmail = config.git.email;
       aliases = {
         ca = "commit --amend --date=\"now\"";
         ci = "commit -m";
