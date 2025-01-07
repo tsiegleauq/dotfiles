@@ -15,6 +15,7 @@
     ./lf.nix
     ./libreoffice.nix
     ./mpv.nix
+    ./nixvim.nix
     ./nvim.nix
     ./rclone.nix
     ./ssh-client.nix

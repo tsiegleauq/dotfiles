@@ -35,7 +35,8 @@
   # lf.enable = true;
   libreoffice.enable = true;
   mpv.enable = true;
-  nvim.enable = true;
+  # nvim.enable = true;
+  nixvim.enable = true;
   # rclone.enable = true;
   ssh-client.enable = true;
   vscode.enable = true;

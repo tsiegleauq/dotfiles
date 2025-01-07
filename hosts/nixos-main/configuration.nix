@@ -50,6 +50,7 @@
     # enable trim ssd support - important
     fstrim.enable = true;
     nfs.server.enable = true;
+    teamviewer.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
