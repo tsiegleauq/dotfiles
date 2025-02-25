@@ -31,7 +31,8 @@
   #enable software
   git.enable = true;
   git.email = "sean.engelhardt@stackit.cloud";
-  nvim.enable = true;
+  nvim.enable = false;
+  nixvim.enable = true;
   zsh.enable = true;
 
   # individual packages per machine
