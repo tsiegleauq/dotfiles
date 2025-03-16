@@ -33,7 +33,7 @@
   git.enable = true;
   gnomeconfig.enable = true;
   # lf.enable = true;
-  libreoffice.enable = true;
+  # libreoffice.enable = true;
   mpv.enable = true;
   # nvim.enable = true;
   nixvim.enable = true;
@@ -41,7 +41,7 @@
   ssh-client.enable = true;
   vscode.enable = true;
   zsh.enable = true;
-  zed.enable = true;
+  # zed.enable = true;
 
   # individual packages per machine
   home.packages = with pkgs; [
@@ -49,16 +49,16 @@
     # butler #broken package
     f3
     bottles
-    calibre
+    # calibre
     desktop-file-utils
     # discord
-    easyeffects
+    # easyeffects
     gimp
     godot_4
     # ghex
     # mnamer # broken
     # iperf
-    jellyfin-media-player
+    # jellyfin-media-player
     libnotify
     # lutris
     # wineWowPackages.stable
@@ -67,8 +67,8 @@
     ruffle
     # rpi-imager
     krita
-    moonlight-qt
-    telegram-desktop
+    # moonlight-qt
+    # telegram-desktop
     unrar
     veracrypt
     vesktop
@@ -77,7 +77,7 @@
     # wipe
     unzip
     p7zip
-    vrrtest
+    # vrrtest
   ];
 
   # programs.kodi = {

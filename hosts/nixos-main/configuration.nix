@@ -12,7 +12,7 @@
   steam.enable = true;
   zshos.enable = true;
   nh.enable = true;
-  sunshine.enable = true;
+  # sunshine.enable = true;
   # bluetooth.enable = true;
 
   # Bootloader.
@@ -65,7 +65,10 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    auto-optimise-store = true;
+  };
 
   system.stateVersion = "23.11";
 
@@ -75,6 +78,11 @@
   #   # Add any missing dynamic libraries for unpackaged programs
   #   # here, NOT in environment.systemPackages
   # ];
+
+  programs.ausweisapp = {
+    enable = true;
+    openFirewall = true;
+  };
 
   ## Testig nix-flathub
   services.flatpak = {
