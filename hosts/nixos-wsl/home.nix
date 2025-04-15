@@ -34,6 +34,7 @@
   nvim.enable = false;
   nixvim.enable = true;
   zsh.enable = true;
+  chromium.enable = true;
 
   # individual packages per machine
   home.packages = with pkgs; [

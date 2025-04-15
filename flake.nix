@@ -78,6 +78,9 @@
               users = {
                 sean = import ./hosts/nixos-notebook/home.nix;
               };
+              sharedModules = [
+                nixvim.homeManagerModules.nixvim
+              ];
             };
           }
         ];
@@ -99,6 +102,9 @@
               users = {
                 sean = import ./hosts/nixos-wsl/home.nix;
               };
+              sharedModules = [
+                nixvim.homeManagerModules.nixvim
+              ];
             };
           }
         ];

@@ -183,7 +183,10 @@
           sources = {
             formatting = {
               alejandra.enable = true;
-              # prettier.enable = true;
+              # prettier = {
+              #   enable = true;
+              #   disableTsServerFormatter = true;
+              # };
               # markdownlint.enable = true;
             };
           };
@@ -204,6 +207,10 @@
 
           servers = {
             ts_ls.enable = true;
+
+            angularls = {
+              enable = true;
+            };
 
             rust_analyzer = {
               enable = true;
