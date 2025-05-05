@@ -14,6 +14,7 @@
     ./home-packages.nix
     ./lf.nix
     ./libreoffice.nix
+    ./mangohud.nix
     ./mpv.nix
     ./nixvim.nix
     ./nvim.nix

@@ -12,7 +12,7 @@
   steam.enable = true;
   zshos.enable = true;
   nh.enable = true;
-  # sunshine.enable = true;
+  sunshine.enable = true;
   # bluetooth.enable = true;
 
   # Bootloader.
@@ -46,11 +46,14 @@
         variant = "altgr-intl";
       };
       videoDrivers = ["amdgpu"];
+      deviceSection = ''
+        Option "DRI" "3"
+        Option "VariableRefresh" "true"
+      '';
     };
     # enable trim ssd support - important
     fstrim.enable = true;
-    nfs.server.enable = true;
-    teamviewer.enable = true;
+    teamviewer.enable = false;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -85,10 +88,10 @@
   };
 
   ## Testig nix-flathub
-  services.flatpak = {
-    enable = true;
-    # packages = [
-    #   "com.usebottles.bottles" # install bottles from flathub
-    # ];
-  };
+  # services.flatpak = {
+  #   enable = false;
+  #   packages = [
+  #     "com.usebottles.bottles" # install bottles from flathub
+  #   ];
+  # };
 }

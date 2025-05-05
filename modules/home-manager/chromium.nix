@@ -9,7 +9,7 @@
     programs.chromium = {
       enable = true;
       extensions = [
-        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+        "ddkjiahejlhfcafbddmgiahcphecmpfh" # ublock origin lite
         "fnaicdffflnofjppbagibeoednhnbjhg" # floccus bookmark sync
         "pkehgijcmpdhfbdbbnkijodmdjhbjlgp" # Privacy Badger
         "lmjnegcaeklhafolokijcfjliaokphfk" # Video Download Helper

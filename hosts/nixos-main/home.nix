@@ -34,6 +34,7 @@
   gnomeconfig.enable = true;
   # lf.enable = true;
   # libreoffice.enable = true;
+  mangohud.enable = true;
   mpv.enable = true;
   # nvim.enable = true;
   nixvim.enable = true;
