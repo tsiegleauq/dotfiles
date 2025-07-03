@@ -24,33 +24,15 @@
   programs.home-manager.enable = true;
 
   #enable software
-  # alacritty.enable = true;
   chromium.enable = true;
-  # downloader.enable = true;
-  # firefox.enable = true;
   git.enable = true;
   gnomeconfig.enable = true;
-  # lf.enable = true;
-  # libreoffice.enable = true;
-  mpv.enable = true;
-  nvim.enable = true;
-  # rclone.enable = true;
+  nixvim.enable = true;
   ssh-client.enable = true;
-  vscode.enable = true;
   zsh.enable = true;
 
   # individual packages per machine
   home.packages = with pkgs; [
-    #audacity
-    #desktop-file-utils
-    # discord
-    #easyeffects
-    #gimp
-    # godot_4
     libnotify
-    #ruffle
-    #krita
-    #veracrypt
-    #vesktop
   ];
 }
