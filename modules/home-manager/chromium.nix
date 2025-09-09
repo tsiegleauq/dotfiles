@@ -36,5 +36,8 @@
         # }
       ];
     };
+    home.sessionVariables = {
+      CHROME_BIN = "chromium";
+    };
   };
 }

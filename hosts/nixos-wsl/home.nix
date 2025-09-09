@@ -35,9 +35,11 @@
   nixvim.enable = true;
   zsh.enable = true;
   chromium.enable = true;
+  direnv.enable = true;
 
   # individual packages per machine
   home.packages = with pkgs; [
     nodejs_22
+    deno
   ];
 }
