@@ -11,7 +11,7 @@
 
   config = lib.mkIf config.gnome.enable {
     # Enable the GNOME Desktop Environment.
-    services.xserver = {
+    services = {
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
     };

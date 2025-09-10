@@ -27,8 +27,8 @@ in {
       history.path = "${config.xdg.dataHome}/zsh/history";
     };
 
-    home.file.".zshrc".text = ''
-      unsetopt nomatch
-    '';
+    #home.file.".zshrc".text = ''
+    #unsetopt nomatch
+    #'';
   };
 }

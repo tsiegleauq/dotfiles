@@ -94,4 +94,8 @@
   #     "com.usebottles.bottles" # install bottles from flathub
   #   ];
   # };
+
+  environment.systemPackages = with pkgs; [
+    xournalpp
+  ];
 }
