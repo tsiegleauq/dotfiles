@@ -53,7 +53,7 @@
     };
     # enable trim ssd support - important
     fstrim.enable = true;
-    teamviewer.enable = false;
+    # teamviewer.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).

@@ -29,7 +29,7 @@
   chromium.enable = true;
   direnv.enable = true;
   downloader.enable = true;
-  # firefox.enable = true;
+  firefox.enable = true;
   git.enable = true;
   gnomeconfig.enable = true;
   # lf.enable = true;
@@ -39,7 +39,7 @@
   # nvim.enable = true;
   nixvim.enable = true;
   # rclone.enable = true;
-  ssh-client.enable = true;
+  # ssh-client.enable = true;
   vscode.enable = true;
   zsh.enable = true;
   # zed.enable = true;
@@ -63,9 +63,11 @@
     libnotify
     # lutris
     # wineWowPackages.stable
+    ocrmypdf
     pavucontrol
     r2modman
     ruffle
+    sweethome3d.application
     # rpi-imager
     krita
     # moonlight-qt
@@ -79,6 +81,7 @@
     unzip
     p7zip
     # vrrtest
+    xarchiver
   ];
 
   # programs.kodi = {

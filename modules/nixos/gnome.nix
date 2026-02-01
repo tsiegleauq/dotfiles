@@ -25,8 +25,22 @@
 
     # Remove some default gnome packages that I dont like
     environment.gnome.excludePackages = with pkgs; [
+      atomix # puzzle game
+      cheese # webcam tool
+      epiphany # web browser
+      evince # document viewer
+      geary # email reader
+      gedit # text editor
+      gnome-characters
+      gnome-music
+      gnome-photos
+      gnome-terminal
       gnome-tour
       gnome-maps
+      hitori # sudoku game
+      iagno # go game
+      tali # poker game
+      totem # video player
     ];
   };
 }

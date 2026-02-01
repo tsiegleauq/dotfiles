@@ -7,7 +7,7 @@
 
   config = lib.mkIf config.ssh-client.enable {
     programs.ssh = {
-      enable = true;
+      # enable = true;
       # addKeysToAgent = "yes";
     };
   };
