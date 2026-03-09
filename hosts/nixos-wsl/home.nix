@@ -30,7 +30,7 @@
 
   #enable software
   git.enable = true;
-  git.email = "sean.engelhardt@stackit.cloud";
+  git.email = "sean.engelhardt@digits.schwarz";
   nvim.enable = false;
   nixvim.enable = true;
   zsh.enable = true;
@@ -41,5 +41,6 @@
   home.packages = with pkgs; [
     nodejs_22
     deno
+    pnpm
   ];
 }

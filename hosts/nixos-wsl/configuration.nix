@@ -18,7 +18,7 @@
 
   programs.nix-ld = {
     enable = true;
-    package = pkgs.nix-ld-rs; # only for NixOS 24.05
+    package = pkgs.nix-ld;
   };
 
   environment.systemPackages = with pkgs; [
@@ -31,7 +31,12 @@
 
   system.stateVersion = "24.05";
 
-  #security.pki.certificateFiles = [
-  #/home/sean/vroot.cer
-  #];
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
+
+  security.pki.certificateFiles = [
+    /etc/nixos/private-certs/customer-repo.crt
+  ];
 }

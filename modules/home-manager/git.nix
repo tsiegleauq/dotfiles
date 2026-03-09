@@ -13,7 +13,7 @@
     programs.git = {
       enable = true;
       settings = {
-        aliases = {
+        alias = {
           ca = "commit --amend --date=\"now\"";
           ci = "commit -m";
           cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|dev' | xargs -n 1 git branch -d";
