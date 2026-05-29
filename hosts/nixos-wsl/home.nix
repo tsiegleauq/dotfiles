@@ -30,7 +30,7 @@
 
   #enable software
   git.enable = true;
-  git.email = "sean.engelhardt@digits.schwarz";
+  git.email = "s.engelhardt@vega.com";
   nvim.enable = false;
   nixvim.enable = true;
   zsh.enable = true;

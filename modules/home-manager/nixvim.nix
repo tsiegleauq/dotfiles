@@ -39,9 +39,152 @@
         #termguicolors = lib.mkForce pkgs.stdenv.isLinux;
       };
 
+      keymaps = [
+        # Show error in current line
+        {
+          mode = "n";
+          key = "<leader>e";
+          action = "<cmd>lua vim.diagnostic.open_float()<CR>";
+          options.desc = "Show Line Diagnostics";
+        }
+        # open trouble
+        {
+          mode = "n";
+          key = "<leader>xx";
+          action = "<cmd>Trouble diagnostics toggle<CR>";
+          options.desc = "Diagnostics (Trouble)";
+        }
+        # From the current file to the folder on oil
+        {
+          mode = "n";
+          key = "-";
+          action = "<cmd>Oil<CR>";
+          options.desc = "Open Parent Directory (Oil)";
+        }
+        # Toggle breakpoints
+        {
+          mode = "n";
+          key = "<leader>db";
+          action = "<cmd>DapToggleBreakpoint<CR>";
+          options.desc = "Debug: Toggle Breakpoint";
+        }
+        # Start debugger or jump to next breakpoint
+        {
+          mode = "n";
+          key = "<leader>dc";
+          action = "<cmd>DapContinue<CR>";
+          options.desc = "Debug: Start/Continue";
+        }
+        # Step in debugger
+        {
+          mode = "n";
+          key = "<leader>do";
+          action = "<cmd>DapStepOver<CR>";
+          options.desc = "Debug: Step Over";
+        }
+        # Step in function
+        {
+          mode = "n";
+          key = "<leader>di";
+          action = "<cmd>DapStepInto<CR>";
+          options.desc = "Debug: Step Into";
+        }
+        # Show hide debug window
+        {
+          mode = "n";
+          key = "<leader>du";
+          action = "<cmd>lua require('dapui').toggle()<CR>";
+          options.desc = "Debug: Toggle UI";
+        }
+        # Git: preview changes
+        {
+          mode = "n";
+          key = "<leader>gp";
+          action = "<cmd>Gitsigns preview_hunk<CR>";
+          options.desc = "Git: Preview Hunk";
+        }
+        # Git: reset changes
+        {
+          mode = "n";
+          key = "<leader>gr";
+          action = "<cmd>Gitsigns reset_hunk<CR>";
+          options.desc = "Git: Reset Hunk";
+        }
+        # format code
+        {
+          mode = ["n" "v"];
+          key = "<leader>rf"; # Refactor Format
+          action.__raw = "function() require('conform').format({ async = true, lsp_fallback = true }) end";
+          options.desc = "Refactor: Format Buffer";
+        }
+        # Neotest: Run nearest test to cursor
+        {
+          mode = "n";
+          key = "<leader>tt"; # "rt" für Run Test (Nearest)
+          action = "<cmd>lua require('neotest').run.run()<CR>";
+          options.desc = "Test: Run Nearest";
+        }
+        # Neotest: Run test file
+        {
+          mode = "n";
+          key = "<leader>tf"; # "rf" für Run File
+          action = "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>";
+          options.desc = "Test: Run Current File";
+        }
+        # Neotest: Show test UI
+        {
+          mode = "n";
+          key = "<leader>ts"; # "ts" für Test Summary
+          action = "<cmd>lua require('neotest').summary.toggle()<CR>";
+          options.desc = "Test: Toggle Summary";
+        }
+        # Neotest: Show output of last test
+        {
+          mode = "n";
+          key = "<leader>to";
+          action = "<cmd>lua require('neotest').output.open({ enter = true })<CR>";
+          options.desc = "Test: Show Output";
+        }
+        # Organize Imports
+        {
+          mode = "n";
+          key = "<leader>oi"; # "oi" für Organize Imports
+          action.__raw = ''
+            function()
+              vim.lsp.buf.code_action({
+                context = { only = { "source.organizeImports" } },
+                apply = true,
+              })
+            end
+          '';
+          options.desc = "LSP: Organize Imports";
+        }
+        # restore last session
+        {
+          mode = "n";
+          key = "<leader>qs"; # "q" für Quit/Session, "s" für Select/Start
+          action.__raw = "function() require('persistence').load() end";
+          options.desc = "Restore Session (Current Dir)";
+        }
+        # load last session
+        {
+          mode = "n";
+          key = "<leader>ql";
+          action.__raw = "function() require('persistence').load({ last = true }) end";
+          options.desc = "Restore Last Session";
+        }
+      ];
+
       plugins = {
         # oil manage folders and files like buffers
-        oil.enable = true;
+        oil = {
+          enable = true;
+          settings = {
+            view_options = {
+              show_hidden = true;
+            };
+          };
+        };
 
         # auto closing parentheses and marks
         autoclose.enable = true;
@@ -52,11 +195,61 @@
         # better status line
         lualine.enable = true;
 
+        luasnip.enable = true;
+
+        # remembering files
+        persistence.enable = true;
+
+        # Premade snippets
+        friendly-snippets.enable = true;
+
         # Panel with hints
-        trouble.enable = true;
+        trouble = {
+          enable = true;
+          settings = {
+            # Sendet fehlgeschlagene Tests direkt ins Trouble-Panel
+            auto_preview = true;
+          };
+        };
 
         # show vim keys
-        which-key.enable = true;
+        which-key = {
+          enable = true;
+          settings = {
+            spec = [
+              {
+                __unkeyed-1 = "<leader>d";
+                group = "Debug";
+                icon = "🐛";
+              }
+              {
+                __unkeyed-1 = "<leader>f";
+                group = "Telescope / Find";
+                icon = "🔍";
+              }
+              {
+                __unkeyed-1 = "<leader>g";
+                group = "Git";
+                icon = "🌿";
+              }
+              {
+                __unkeyed-1 = "<leader>r";
+                group = "Refactoring";
+                icon = "🔨";
+              }
+              {
+                __unkeyed-1 = "<leader>t";
+                group = "Test";
+                icon = "🧪";
+              }
+              {
+                __unkeyed-1 = "<leader>o";
+                group = "Organize / LSP";
+                icon = "🧹";
+              }
+            ];
+          };
+        };
 
         # colorful braces
         rainbow-delimiters.enable = true;
@@ -66,6 +259,14 @@
           enable = true;
           autoEnableSources = true;
           settings = {
+            # we actually want to type $
+            snippet = {
+              expand = ''
+                function(args)
+                  require('luasnip').lsp_expand(args.body)
+                end
+              '';
+            };
             sources = [
               {name = "nvim_lsp";}
               {name = "path";}
@@ -132,16 +333,59 @@
         telescope = {
           enable = true;
           extensions.fzf-native = {enable = true;};
+          settings = {
+            defaults = {
+              # Ignore these folders
+              file_ignore_patterns = [
+                "^node_modules/"
+                "^%.git/"
+                # generated lock files
+                "package%-lock%.json"
+                "pnpm%-lock%.yaml"
+                "yarn%.lock"
+                # angular build
+                "^dist/"
+                "^%.angular/"
+              ];
+
+              # Parameters for live_grep (<leader>fg)
+              vimgrep_arguments = [
+                "rg"
+                "--color=never"
+                "--no-heading"
+                "--with-filename"
+                "--line-number"
+                "--column"
+                "--smart-case"
+                "--hidden" # hidden folders like .storybook
+              ];
+            };
+
+            pickers = {
+              find_files = {
+                hidden = true; # Show hidden files too
+              };
+
+              buffers = {
+                mappings = {
+                  # Insert mode delete buffer. Lua required to to hickups
+                  i = {
+                    "<C-d>" = {__raw = "require('telescope.actions').delete_buffer";};
+                  };
+                  # In normal mode
+                  n = {
+                    "<C-d>" = {__raw = "require('telescope.actions').delete_buffer";};
+                    "d" = {__raw = "require('telescope.actions').delete_buffer";}; # deletes buffer in normal mode
+                  };
+                };
+              };
+            };
+          };
           keymaps = {
             "<leader>ff" = "find_files";
             "<leader>fg" = "live_grep";
             "<leader>fb" = "buffers";
-            "<C-p>" = {
-              action = "git_files";
-              options = {
-                desc = "Telescope Git Files";
-              };
-            };
+            "<C-p>" = "git_files";
           };
         };
 
@@ -160,12 +404,24 @@
             json
             markdown
             nix
+            rust
+            typescript
+            scss
+            javascript
+            html
+            css
+            go
+            gomod
+            gosum
+            gowork
           ];
         };
 
         treesitter-context = {
           enable = true;
-          settings = {max_lines = 2;};
+          settings = {
+            max_lines = 2;
+          };
         };
 
         # git helpers
@@ -183,11 +439,37 @@
           sources = {
             formatting = {
               alejandra.enable = true;
-              # prettier = {
-              #   enable = true;
-              #   disableTsServerFormatter = true;
-              # };
+              prettier = {
+                enable = true;
+                disableTsServerFormatter = true;
+              };
               # markdownlint.enable = true;
+            };
+          };
+        };
+
+        # modern more stable formating
+        conform-nvim = {
+          enable = true;
+          settings = {
+            format_on_save = {
+              lsp_format = "fallback";
+              timeout_ms = 1000;
+            };
+          };
+        };
+
+        toggleterm = {
+          enable = true;
+          settings = {
+            # open terminal with Ctrl + t
+            open_mapping = "[[<C-t>]]";
+
+            # ("horizontal", "vertical" oder "float")
+            direction = "float";
+
+            float_opts = {
+              border = "curved";
             };
           };
         };
@@ -203,6 +485,7 @@
             "gi" = "implementation";
             "<leader>rn" = "rename";
             "K" = "hover";
+            "<leader>ca" = "code_action";
           };
 
           servers = {
@@ -218,12 +501,62 @@
               installCargo = false;
               installRustfmt = true;
             };
+
+            gopls = {
+              enable = true;
+            };
+
+            emmet_ls.enable = true;
+            tailwindcss.enable = false;
           };
         };
 
-        # Format code over LSPs
-        lsp-format.enable = true;
+        # DAP Debugger, firewall issues
+        dap = {
+          enable = false;
+
+          signs = {
+            dapBreakpoint = {
+              text = "🔴";
+              texthl = "DapBreakpoint";
+            };
+          };
+        };
+
+        dap-ui = {
+          enable = false;
+        };
+
+        dap-go = {
+          enable = false;
+        };
+
+        # test runner
+        neotest = {
+          enable = true;
+          adapters = {
+            # Go
+            go.enable = false;
+            # Vitest
+            vitest.enable = false;
+          };
+        };
       };
+
+      # Fängt Abstürze von nvim-cmp bei kaputten SCSS/LESS Snippets (wie $) ab
+      extraConfigLua = ''
+        local cmp_snippet = require('cmp.utils.snippet')
+        local orig_parse = cmp_snippet.parse
+        cmp_snippet.parse = function(self, input)
+          local ok, ret = pcall(orig_parse, self, input)
+          if ok then
+            return ret
+          end
+          -- Wenn das Parsen fehlschlägt (z.B. bei kaputten $ Snippets),
+          -- ignorieren wir es leise, anstatt einen Fehler zu werfen.
+          return nil
+        end
+      '';
     };
   };
 }
