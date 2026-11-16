@@ -12,80 +12,47 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot = {
-    initrd = {
-      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
-      kernelModules = ["amdgpu"];
-      luks.devices = {
-        "luks-8c94a92d-5dfe-46ab-ae74-01afcc1d9f74" = {
-          device = "/dev/disk/by-uuid/8c94a92d-5dfe-46ab-ae74-01afcc1d9f74";
-          allowDiscards = true;
-        };
-      };
-    };
-    kernelModules = ["kvm-amd"];
-    extraModulePackages = [];
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = ["kvm-amd"];
+  boot.extraModulePackages = [];
+
+  fileSystems."/" = {
+    device = "/dev/mapper/luks-8c94a92d-5dfe-46ab-ae74-01afcc1d9f74";
+    fsType = "ext4";
   };
 
-  # unlock local LUKS devices
-  environment.etc.crypttab.text = ''
-    store1 UUID=6e2ea2c7-9867-4b3c-8e6a-41f1bbd09ef6 /root/mykeyfile.key
-    store_encrypted UUID=28d3d51b-79b3-4f7f-a05b-089d681cc7f2 /root/mykeyfile.key
-    games UUID=4bf1b50e-0064-4510-9c54-4336740fae23 /root/mykeyfile.key
-  '';
+  boot.initrd.luks.devices."luks-8c94a92d-5dfe-46ab-ae74-01afcc1d9f74".device = "/dev/disk/by-uuid/8c94a92d-5dfe-46ab-ae74-01afcc1d9f74";
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/9a326b65-ccd8-4ef7-a07e-00f8f795c95c";
-      fsType = "ext4";
-      options = ["discard" "noatime"];
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/927C-B622";
-      fsType = "vfat";
-      options = ["fmask=0022" "dmask=0022"];
-    };
-
-    "/media/store" = {
-      device = "/dev/mapper/store1";
-      options = ["nofail"];
-      fsType = "ext4";
-    };
-
-    "/media/games_encrypted" = {
-      device = "/dev/mapper/store_encrypted";
-      options = ["nofail"];
-      fsType = "ext4";
-    };
-
-    "/media/games" = {
-      device = "/dev/mapper/games";
-      options = ["nofail"];
-      fsType = "ext4";
-    };
-
-    # "/mnt/nfshdd" = {
-    #   device = "omv:/hdd";
-    #   fsType = "nfs";
-    #   options = ["nfsvers=4.2" "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
-    # };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/927C-B622";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
   };
+
+  fileSystems."/media/games" = {
+    device = "/dev/mapper/games";
+    fsType = "ext4";
+  };
+
+  boot.initrd.luks.devices."games".device = "/dev/disk/by-uuid/4bf1b50e-0064-4510-9c54-4336740fae23";
+
+  fileSystems."/media/store" = {
+    device = "/dev/mapper/store1";
+    fsType = "ext4";
+  };
+
+  boot.initrd.luks.devices."store1".device = "/dev/disk/by-uuid/6e2ea2c7-9867-4b3c-8e6a-41f1bbd09ef6";
+
+  fileSystems."/media/games_encrypted" = {
+    device = "/dev/mapper/store_encrypted";
+    fsType = "ext4";
+  };
+
+  boot.initrd.luks.devices."store_encrypted".device = "/dev/disk/by-uuid/28d3d51b-79b3-4f7f-a05b-089d681cc7f2";
 
   swapDevices = [];
 
-  networking = {
-    useDHCP = lib.mkDefault true;
-  };
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-  hardware = {
-    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    xone.enable = true;
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-  };
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -7,37 +7,88 @@
     ./hardware-configuration.nix
   ];
 
+  # ============================================================================
+  # 1. SYSTEM IDENTITY & MODULE TOGGLES
+  # ============================================================================
+  networking.hostName = "nixos-main";
+  system.stateVersion = "23.11";
+
+  # Custom local module toggles
   gnome.enable = true;
   samsungprinter.enable = true;
   steam.enable = true;
   zshos.enable = true;
   nh.enable = true;
-  sunshine.enable = true;
-  # bluetooth.enable = true;
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # ============================================================================
+  # 2. BOOT, KERNEL & HARDWARE CONFIGURATION
+  # ============================================================================
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
 
-  # make AppImages runnable
-  boot.binfmt.registrations.appimage = {
-    wrapInterpreterInShell = false;
-    interpreter = "${pkgs.appimage-run}/bin/appimage-run";
-    recognitionType = "magic";
-    offset = 0;
-    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-    magicOrExtension = ''\x7fELF....AI\x02'';
+    # Kernel Tweaks for ath9k Wi-Fi & IOMMU pass-through
+    kernelParams = ["iommu=pt"];
+    extraModprobeConfig = ''
+      options ath9k blink=0 btcoex_enable=1 nohwcrypt=1
+    '';
+
+    # Support standard filesystems natively
+    supportedFilesystems = ["ntfs"];
+
+    # Automate unlocking secondary LUKS drives with your keyfile in initrd
+    initrd = {
+      secrets = {
+        "/root/mykeyfile.key" = "/root/mykeyfile.key";
+      };
+      luks.devices = {
+        "store1".keyFile = "/root/mykeyfile.key";
+        "games".keyFile = "/root/mykeyfile.key";
+        "store_encrypted".keyFile = "/root/mykeyfile.key";
+      };
+    };
   };
 
+  # Hardware firmware and monitoring drivers
+  hardware = {
+    enableRedistributableFirmware = true;
+    rasdaemon.enable = true;
+  };
+
+  # ============================================================================
+  # 3. FILESYSTEMS & STORAGE OPTIMIZATIONS
+  # ============================================================================
+  # Mount options for primary root and secondary mapped storage
+  fileSystems."/".options = ["noatime"];
+  fileSystems."/media/store".options = ["nofail"];
+  fileSystems."/media/games".options = ["nofail"];
+  fileSystems."/media/games_encrypted".options = ["nofail"];
+
+  # Enable weekly TRIM for SSD health and performance (avoids synchronous discard lag)
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
+  # ============================================================================
+  # 4. NETWORKING
+  # ============================================================================
   networking = {
-    hostName = "nixos-main";
     networkmanager.enable = true;
     extraHosts = ''
       192.168.0.26 omv
       192.168.0.128 moode
     '';
+    wireless.extraConfig = ''
+      country=DE
+    '';
   };
 
+  # ============================================================================
+  # 5. SYSTEM SERVICES & DISPLAY SERVER
+  # ============================================================================
   services = {
     xserver = {
       enable = true;
@@ -46,56 +97,77 @@
         variant = "altgr-intl";
       };
       videoDrivers = ["amdgpu"];
-      deviceSection = ''
-        Option "DRI" "3"
-        Option "VariableRefresh" "true"
-      '';
     };
-    # enable trim ssd support - important
-    fstrim.enable = true;
-    # teamviewer.enable = true;
+
+    # Set Wi-Fi regulatory domain on device add via udev
+    udev.extraRules = ''
+      SUBSYSTEM=="net", ACTION=="add", NAME=="wlan*", RUN+="${pkgs.iw}/bin/iw reg set DE"
+    '';
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account.
+  # ============================================================================
+  # 6. USERS & ACCOUNTS
+  # ============================================================================
   users.users.sean = {
     isNormalUser = true;
     description = "sean";
     extraGroups = ["users" "networkmanager" "wheel" "scanner" "lp"];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  # ============================================================================
+  # 7. SYSTEM PROGRAMS & ENVIRONMENT
+  # ============================================================================
+  programs = {
+    # Modern, reliable AppImage execution support
+    appimage = {
+      enable = true;
+      binfmt = true;
+    };
 
-  nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    auto-optimise-store = true;
+    # Dynamic linker support for unpackaged/standalone binaries
+    nix-ld.enable = true;
+
+    # German identity card app support
+    ausweisapp = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
-  system.stateVersion = "23.11";
-
-  # for standalone linux applications
-  programs.nix-ld.enable = true;
-  # programs.nix-ld.libraries = with pkgs; [
-  #   # Add any missing dynamic libraries for unpackaged programs
-  #   # here, NOT in environment.systemPackages
-  # ];
-
-  programs.ausweisapp = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  ## Testig nix-flathub
-  # services.flatpak = {
-  #   enable = false;
-  #   packages = [
-  #     "com.usebottles.bottles" # install bottles from flathub
-  #   ];
-  # };
-
+  # Core system-wide software packages
   environment.systemPackages = with pkgs; [
     xournalpp
   ];
+
+  # ============================================================================
+  # 8. NIX PACKAGE MANAGER SETTINGS
+  # ============================================================================
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    # Disabled inline auto-optimise to prevent rebuilding/downloading bottlenecks.
+    # Store optimization should be run periodically (via `nh clean`).
+    auto-optimise-store = false;
+  };
+
+  # ============================================================================
+  # 9. THEMING
+  # ============================================================================
+  catppuccin = {
+    enable = true;
+    autoEnable = true;
+
+    flavor = "mocha";
+    accent = "mauve";
+
+    # Use pre-compiled whiskers from nixpkgs to avoid building from source
+    sources = inputs.catppuccin.packages.${pkgs.stdenv.hostPlatform.system}.overrideScope (_: _: {
+      whiskers = pkgs.catppuccin-whiskers;
+    });
+
+    cache.enable = true;
+  };
 }

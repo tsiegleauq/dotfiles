@@ -16,7 +16,6 @@
           enableExtensionUpdateCheck = false;
           enableUpdateCheck = false;
           extensions = with pkgs.vscode-extensions; [
-            dracula-theme.theme-dracula
             yzhang.markdown-all-in-one
             bbenoist.nix
             kamadorueda.alejandra
@@ -37,7 +36,6 @@
             "terminal.integrated.fontSize" = 14;
 
             # Styling
-            "workbench.colorTheme" = "Dracula";
             "window.menuBarVisibility" = "toggle";
           };
         };

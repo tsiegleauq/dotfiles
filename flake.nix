@@ -1,12 +1,12 @@
 {
-  description = "Nixos config flake";
+  description = "NixOS config flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -14,16 +14,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    firefox-addons = {
-      # see https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json?ref_type=heads
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    nixvim = {
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nix-flatpak = {
-    #   url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -32,83 +31,54 @@
     home-manager,
     nixos-wsl,
     nixvim,
-    # nix-flatpak,
+    catppuccin,
     ...
-  }: {
+  }: let
+    mkSystem = hostname: system: extraModules:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {inherit inputs;};
+        modules =
+          [
+            ./hosts/${hostname}/configuration.nix
+            catppuccin.nixosModules.catppuccin
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = {inherit inputs;};
+                users.sean = {
+                  imports = [
+                    ./hosts/${hostname}/home.nix
+                    catppuccin.homeModules.catppuccin
+                  ];
+                };
+              };
+            }
+          ]
+          ++ extraModules;
+      };
+  in {
     nixosConfigurations = {
-      ##############
-      # Main machine
-      ##############
-      nixos-main = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/nixos-main/configuration.nix
-          ./modules/nixos
-          # nix-flatpak.nixosModules.nix-flatpak
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              extraSpecialArgs = {inherit inputs;};
-              users = {
-                sean = import ./hosts/nixos-main/home.nix;
-              };
-              sharedModules = [
-                nixvim.homeModules.nixvim
-              ];
-            };
-          }
-        ];
-      };
-      # Notebook
-      nixos-notebook = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/nixos-notebook/configuration.nix
-          ./modules/nixos
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              extraSpecialArgs = {inherit inputs;};
-              users = {
-                sean = import ./hosts/nixos-notebook/home.nix;
-              };
-              sharedModules = [
-                nixvim.homeModules.nixvim
-              ];
-            };
-          }
-        ];
-      };
-      #wsl
-      nixos-wsl = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/nixos-wsl/configuration.nix
-          nixos-wsl.nixosModules.default
-          ./modules/nixos
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              extraSpecialArgs = {inherit inputs;};
-              users = {
-                sean = import ./hosts/nixos-wsl/home.nix;
-              };
-              sharedModules = [
-                nixvim.homeModules.nixvim
-              ];
-            };
-          }
-        ];
-      };
+      nixos-main = mkSystem "nixos-main" "x86_64-linux" [
+        ./modules/nixos/_core.nix
+        ./modules/nixos/_desktop.nix
+      ];
+
+      nixos-notebook = mkSystem "nixos-notebook" "x86_64-linux" [
+        ./modules/nixos/_core.nix
+        ./modules/nixos/_desktop.nix
+      ];
+
+      nixos-wsl = mkSystem "nixos-wsl" "x86_64-linux" [
+        nixos-wsl.nixosModules.default
+        ./modules/nixos/core.nix
+      ];
+
+      nixos-pi = mkSystem "nixos-pi" "aarch64-linux" [
+        ./modules/nixos/core.nix
+      ];
     };
   };
 }

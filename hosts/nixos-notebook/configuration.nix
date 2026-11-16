@@ -26,7 +26,10 @@
     variant = "nodeadkeys";
   };
 
-  services.fstrim.enable = true;
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

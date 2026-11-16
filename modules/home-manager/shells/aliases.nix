@@ -12,6 +12,7 @@
   # nixos aliases
   nix-switch = "nh os switch --impure";
   nix-test = "nh os test --impure";
+  nix-boot = "nh os boot --impure";
   nix-update = "sudo nix-channel --update";
   nix-optimize = "sudo nix-store --optimise";
   flake-update = "nix flake update --flake ~/.dotfiles";

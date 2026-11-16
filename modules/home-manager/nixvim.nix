@@ -5,6 +5,7 @@
   pkgs,
   ...
 }: {
+  imports = [inputs.nixvim.homeModules.nixvim];
   options.nixvim.enable = lib.mkEnableOption "enables nixvim home-manager module";
 
   config = lib.mkIf config.nixvim.enable {

@@ -6,9 +6,14 @@
 }: {
   home.packages = with pkgs; [
     xclip
-    eza
     ffmpeg
     libnotify
     rsync
   ];
+
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+    icons = "auto";
+  };
 }

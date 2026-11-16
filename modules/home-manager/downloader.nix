@@ -11,7 +11,7 @@
       # uget
       # uget-integrator
       # motrix
-      vdhcoapp
+      # vdhcoapp
       # pyload-ng
       jre #for jdownloader
     ];
