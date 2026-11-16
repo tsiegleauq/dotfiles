@@ -39,7 +39,7 @@
 
   # individual packages per machine
   home.packages = with pkgs; [
-    nodejs_22
+    nodejs_24
     deno
     pnpm
   ];

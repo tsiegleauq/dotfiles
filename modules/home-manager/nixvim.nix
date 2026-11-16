@@ -174,6 +174,13 @@
           action.__raw = "function() require('persistence').load({ last = true }) end";
           options.desc = "Restore Last Session";
         }
+        # Telescope: Live Grep with Ripgrep-Arguments ("Text" -g *.html)
+        {
+          mode = "n";
+          key = "<leader>fg";
+          action = "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>";
+          options.desc = "Telescope: Live Grep (Args)";
+        }
       ];
 
       plugins = {
@@ -333,7 +340,10 @@
         # fuzzy finder
         telescope = {
           enable = true;
-          extensions.fzf-native = {enable = true;};
+          extensions = {
+            fzf-native = {enable = true;};
+            live-grep-args = {enable = true;};
+          };
           settings = {
             defaults = {
               # Ignore these folders
@@ -384,7 +394,6 @@
           };
           keymaps = {
             "<leader>ff" = "find_files";
-            "<leader>fg" = "live_grep";
             "<leader>fb" = "buffers";
             "<C-p>" = "git_files";
           };

@@ -13,6 +13,15 @@
     defaultUser = "sean";
   };
 
+  systemd.services."wsl-mnt-guard" = {
+    overrideStrategy = "asDropin";
+    unitConfig.ConditionPathIsMountPoint = "/mnt/wsl";
+    serviceConfig = {
+      ExecStart = ["" "${pkgs.coreutils}/bin/true"];
+      ExecStop = ["" "-${pkgs.util-linux}/bin/mount --make-rslave /mnt/wsl"];
+    };
+  };
+
   zshos.enable = true;
   nh.enable = true;
 
@@ -38,5 +47,6 @@
 
   security.pki.certificateFiles = [
     /etc/nixos/private-certs/customer-repo.crt
+    /etc/nixos/private-certs/customer-prd.crt
   ];
 }
