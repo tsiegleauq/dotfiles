@@ -19,12 +19,10 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   programs.home-manager.enable = true;
 
   #enable software
-  chromium.enable = true;
+  firefox.enable = true;
   git.enable = true;
   gnomeconfig.enable = true;
   nixvim.enable = true;

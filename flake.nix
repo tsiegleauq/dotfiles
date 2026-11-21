@@ -1,22 +1,39 @@
 {
   description = "NixOS config flake";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  nixConfig = {
+    extra-substituters = [
+      "https://catppuccin.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "catppuccin.cachix.org-1:j9FfH5E5nPEDgM88w83p73N9479bC/Aebq2LTL4KIK8="
+    ];
+  };
 
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  inputs = {
+    # Unstable inputs (for nixos-main, wsl)
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Stable inputs (for nixos-notebook)
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     catppuccin = {
@@ -28,21 +45,30 @@
   outputs = inputs @ {
     self,
     nixpkgs,
+    nixpkgs-stable,
     home-manager,
+    home-manager-stable,
     nixos-wsl,
     nixvim,
     catppuccin,
     ...
   }: let
-    mkSystem = hostname: system: extraModules:
-      nixpkgs.lib.nixosSystem {
+    # Added pkgsInput and hmInput parameters to isolate release branches per host
+    mkSystem = {
+      hostname,
+      system,
+      pkgsInput ? nixpkgs,
+      hmInput ? home-manager,
+      extraModules ? [],
+    }:
+      pkgsInput.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs;};
         modules =
           [
             ./hosts/${hostname}/configuration.nix
             catppuccin.nixosModules.catppuccin
-            home-manager.nixosModules.home-manager
+            hmInput.nixosModules.home-manager
             {
               home-manager = {
                 useGlobalPkgs = true;
@@ -61,24 +87,34 @@
       };
   in {
     nixosConfigurations = {
-      nixos-main = mkSystem "nixos-main" "x86_64-linux" [
-        ./modules/nixos/_core.nix
-        ./modules/nixos/_desktop.nix
-      ];
+      nixos-main = mkSystem {
+        hostname = "nixos-main";
+        system = "x86_64-linux";
+        extraModules = [
+          ./modules/nixos/_core.nix
+          ./modules/nixos/_desktop.nix
+        ];
+      };
 
-      nixos-notebook = mkSystem "nixos-notebook" "x86_64-linux" [
-        ./modules/nixos/_core.nix
-        ./modules/nixos/_desktop.nix
-      ];
+      nixos-notebook = mkSystem {
+        hostname = "nixos-notebook";
+        system = "x86_64-linux";
+        pkgsInput = nixpkgs-stable;
+        hmInput = home-manager-stable;
+        extraModules = [
+          ./modules/nixos/_core.nix
+          ./modules/nixos/_desktop.nix
+        ];
+      };
 
-      nixos-wsl = mkSystem "nixos-wsl" "x86_64-linux" [
-        nixos-wsl.nixosModules.default
-        ./modules/nixos/core.nix
-      ];
-
-      nixos-pi = mkSystem "nixos-pi" "aarch64-linux" [
-        ./modules/nixos/core.nix
-      ];
+      nixos-wsl = mkSystem {
+        hostname = "nixos-wsl";
+        system = "x86_64-linux";
+        extraModules = [
+          nixos-wsl.nixosModules.default
+          ./modules/nixos/_core.nix
+        ];
+      };
     };
   };
 }

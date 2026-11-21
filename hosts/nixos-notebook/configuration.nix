@@ -1,4 +1,9 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -8,42 +13,50 @@
   nh.enable = true;
   bluetooth.enable = true;
 
-  # Bootloader.
+  nixpkgs.config.allowUnfree = true;
+
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos-notebook";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Configure keymap
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "nodeadkeys";
+  networking = {
+    hostName = "nixos-notebook";
+    networkmanager.enable = true;
   };
 
-  services.fstrim = {
+  # Enable X11 & Keymap
+  services.xserver = {
     enable = true;
-    interval = "weekly";
+    xkb = {
+      layout = "de";
+      variant = "nodeadkeys";
+    };
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  # Prevent Skylake i7-6500U thermal throttling during updates/video playback
+  services.thermald.enable = true;
 
-  # Define a user account.
+  # Hardware video acceleration for Intel HD Graphics 520 (keeps Chromium/GNOME snappy)
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+    ];
+  };
+
   users.users.sean = {
     isNormalUser = true;
     description = "sean";
     extraGroups = ["networkmanager" "wheel"];
   };
 
-  nixpkgs.config.allowUnfree = true;
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix = {
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "sean"];
+    };
+  };
 
   system.stateVersion = "23.11";
 }
